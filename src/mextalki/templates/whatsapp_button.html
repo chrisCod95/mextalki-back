@@ -1,0 +1,16 @@
+<a href='https://wa.me/{{whatsapp_phone_number}}' class="btn-wsp" target="_blank" data-toggle="tooltip" data-placement="left" title="Send us a message">
+    <i class="fab fa-whatsapp"></i>
+</a>
+{% if not user.is_authenticated %}
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true"  data-delay="15000">
+    <div class="toast-header d-flex flex-row justify-content-between">
+        <img src="{% static 'mextalki_transparent_logo.png' %}" class="rounded toast-img" alt="...">
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        Can we help you with something? You’ll be surprised how fast we reply!
+    </div>
+</div>
+{% endif %}

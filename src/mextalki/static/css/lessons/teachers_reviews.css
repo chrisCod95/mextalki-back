@@ -1,0 +1,13 @@
+.testimonial-thumbnail {
+    margin-bottom: 1rem;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+.testimonial-name {
+    font-size: 13px;
+}
+.testimonial-subtitle {
+    font-size: 10px;
+    font-style: italic;
+}

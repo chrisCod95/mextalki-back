@@ -1,0 +1,19 @@
+{% for object in main_queryset %}
+    <div class="col-md-4 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ object.title }}</h5>
+                {% autoescape off %}
+                    {% if object.preview != '' %}
+                        {{ object.preview|truncatechars:200 }}
+                    {% else %}
+                        {{ object.content|truncatechars:200 }}
+                    {% endif %}
+                {% endautoescape %}
+                <br>
+                <a href="{% url 'announcement_detail' slug=object.slug %}" class="card-link">See more</a>
+              <p class="card-text"><small class="text-muted">{{ object.created_at|timesince }} ago</small></p>
+            </div>
+        </div>
+    </div>
+{% endfor %}

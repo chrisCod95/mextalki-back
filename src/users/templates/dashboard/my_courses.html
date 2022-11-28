@@ -1,0 +1,23 @@
+<div class="card mb-3">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand">My courses</span>
+    </nav>
+    <div class="card-body px-0 py-1">
+        <ul class="list-group list-group-flush">
+            {% for course in user.courses %}
+                <li class="list-group-item">
+                    <i class="fas fa-book mr-2" aria-hidden="true"></i>
+                    <a href="{% url 'course_detail' slug=course.slug %}">{{ course.title }}</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">
+                {% if not user.has_active_subscription %}
+                    <span><a href="{% url 'subscription' %}">Subscribe now</a> to get full access.</span>
+                 {% else %}
+                    <span>Your subscription type doesn't have access to courses.</span>
+                {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

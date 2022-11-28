@@ -1,0 +1,17 @@
+{% regroup tags by name|slugify|slice:":1" as letter_list %}
+<div class="d-flex flex-wrap">
+{% for letter in letter_list %}
+    <div class="dropdown mx-1">
+      <button class="btn btn-primary btn-sm dropdown-toggle px-2 my-1" type="button" id="letter{{ letter.grouper|upper }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ letter.grouper|upper }}
+      </button>
+        <div class="dropdown-menu" aria-labelledby="letter{{ letter.grouper|upper }}">
+            {% for tag in letter.list %}
+                <a href="{% url 'podcast' %}?tag={{ tag.slug }}" class="dropdown-item {% if tag.name == selected_tag %}active{% endif %}">
+                    {{ tag|capfirst }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+</div>

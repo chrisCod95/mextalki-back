@@ -1,0 +1,11 @@
+<div class="card bg-dark text-white">
+    <div class="card-body well-answered-card">
+        <h5 class="card-title">{{test.title}}</h5>
+        <div class="dropdown-divider"></div>
+        <div class="alert alert-success" role="alert">
+            <span class="congrats">Congrats!</span><span class="emojis">&#129395 &#127881</span><br>
+            <span class="scored">You’ve scored: </span>{{ score.exp_points|floatformat }} exp points.<br>
+            Please click <a id="link" href="{% url 'podcast' %}">here</a> to watch more content.
+        </div>
+    </div>
+</div>

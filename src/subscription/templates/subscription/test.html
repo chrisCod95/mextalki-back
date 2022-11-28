@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Subscription{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Subscription{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .tester-message {
+            display: flex;
+        }
+        .test-message-logo {
+            width: 10%;
+        }
+        .test-message-logo img {
+            width: 100%;
+            clip-path: circle();
+        }
+        .test-message {
+            font-size: 15px;
+        }
+        @media only screen and (max-width: 767px) {
+            .test-message {
+                width: 100%;
+            }
+            .test-message-logo {
+                width: 25%;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card mt-4">
+            <div class="card-body">
+                <div class="tester-message">
+                    <div class="test-message-logo">
+                        <img src="{% static 'mextalki_post_logo.jpeg' %}" alt="">
+                    </div>
+                    <div class="alert alert-info test-message">
+                        Hello Dear Mextalker:<br>
+                        This test is just to help us know what's the best subscription option for you.<br>
+                        Just relax and answer honestly without any type of external help.
+                    </div>
+                </div>
+                <div class="tester-message">
+                    <div class="test-message-logo">
+                        <img src="{% static 'mextalki_post_logo.jpeg' %}" alt="">
+                    </div>
+                    <div class="alert alert-info test-message">
+                        I will ask you questions one by one. You will have 90 minutes to answer each question.<br>
+                        Once you answered the question will step into another one. Are you ready? <br>
+                        <button class="btn btn-primary btn-block btn-sm mt-1">Yes, let's do it</button>
+                    </div>
+                </div>
+                <div class="tester-message">
+                    <div class="test-message-logo">
+                        <img src="{% static 'mextalki_post_logo.jpeg' %}" alt="">
+                    </div>
+                    <div class="alert alert-info test-message">
+                        Ok let's jump in!
+                    </div>
+                </div>
+                <div class="tester-message">
+                    <div class="test-message-logo">
+                        <img src="{% static 'mextalki_post_logo.jpeg' %}" alt="">
+                    </div>
+                    <div class="alert alert-info test-message">
+                        Whats the diference between dog and cat?<br>
+                        <span class="badge badge-primary">Nothing</span>
+                        <span class="badge badge-primary">They are the same</span>
+                        <span class="badge badge-primary">Are you insane?</span>
+                        <span class="badge badge-primary">Abraham Lincoln</span>
+                    </div>
+                </div>
+                <div class="tester-message">
+                    <div class="test-message-logo">
+                        <img src="{% static 'mextalki_post_logo.jpeg' %}" alt="">
+                    </div>
+                    <div class="alert alert-info font-weight-bold test-message">
+                        Greate! 🥳
+                        <br>"Are you insane?" is the right answer. Let's move on.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

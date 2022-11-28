@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .post-header {
+            margin-top: 5rem;
+        }
+        #post-title {
+            display: grid;
+            place-items: center;
+        }
+        .sign-up-cta {
+            background-color: #d9d9d9;
+            color: #8a8a8a;
+            font-size: 12px;
+        }
+        .post-content {
+            margin-top: 3rem;
+            position: relative;
+            right: 0;
+            left: 0;
+            margin-right: auto;
+            margin-left: auto;
+            width: 75%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row post-header border-bottom">
+        <div id="post-title" class="col-md-6">
+            <h1 class="text-center">{{ object.title }}</h1>
+        </div>
+        <div class="col-md-6">
+            <img class="img-fluid" src="{{ object.image.url }}" alt="object image">
+        </div>
+    </div>
+</div>
+{% if not user.is_authenticated %}
+    <div class="mt-3 py-1 text-center container sign-up-cta">
+        <span class="font-weight-bold">Register Now</span>
+        <span class="font-italic">and get your firs conversation club and your first lesson <u>For Free</u></span>
+        <a class="btn btn-primary btn-sm ml-3" href="{% url 'sign_up' %}">Sign Up</a>
+    </div>
+{% endif %}
+<div class="container">
+    <div class="row post-content">
+        <div class="col-md-12">
+            {% autoescape off %}
+                {{ object.content }}
+            {% endautoescape %}
+        </div>
+    </div>
+</div>
+{% endblock %}

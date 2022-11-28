@@ -1,0 +1,46 @@
+{% load reverse_url %}
+<div class="container">
+    {% for section in copy_sections %}
+        {% if forloop.counter|divisibleby:"2" %}
+            <div class="row copy-section" id="{{section.title}}">
+                <div class="col-md-6 img-container">
+                    <img id="section-img" src="{{ section.image.url }}" alt="">
+                </div>
+                <div class="col-md-6">
+                    <h2><i class="{{ section.icon }}"></i>{{ section.title }}</h2>
+                    <h4>{{ section.subtitle }}</h4>
+                    <p>
+                        {% autoescape off %}
+                            {{ section.text }}
+                        {% endautoescape %}
+                    </p>
+                    {% if section.button_link %}
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-lg btn-primary" href="{{ section.button_link|reverse_url }}" role="button">{{ section.button_text|default_if_none:"" }}</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="row copy-section" id="{{section.title}}">
+                <div class="col-md-6">
+                    <h2><i class="{{ section.icon }}"></i>{{ section.title }}</h2>
+                    <h4>{{ section.subtitle }}</h4>
+                    <p>
+                        {% autoescape off %}
+                            {{ section.text }}
+                        {% endautoescape %}
+                    </p>
+                    {% if section.button_link %}
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-lg btn-primary" href="{{ section.button_link|reverse_url }}" role="button">{{ section.button_text|default_if_none:"" }}</a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    <img id="section-img" src="{{ section.image.url }}" alt="">
+                </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>

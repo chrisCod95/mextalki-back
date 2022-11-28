@@ -1,0 +1,35 @@
+<div class="card plan-card mb-2 mb-lg-0">
+    {% if subscription_type.best_deal %}
+        <div class="ribbon">Best Value</div>
+    {% endif %}
+    <div class="card-body pt-3 d-flex flex-column">
+        <span class="card-title">{{ subscription_type.title }}</span>
+        <div class="price-section mt-4">
+            {% if  subscription_type.has_discount %}
+                <div class="row ml-1 align-center">
+                    <span class="override-price d-block">${{ subscription_type.price|stringformat:".2f" }}</span>
+                    <small class="discount-percentage ml-2 text-danger">-30% off</small>
+                </div>
+            {% endif %}
+            <span class="price d-inline">${{ subscription_type.final_price|stringformat:".2f" }}</span>
+            <div class="d-inline">
+                <span>{{ subscription_type.currency }}</span>/<span class="billing-cycle">{{ subscription_type.billing_cycle }}</span>
+            </div>
+            {% if subscription_type.has_discount %}
+                <br><small class="monthly-price" data-currency="{{ subscription_type.currency }}"
+                           data-final-price="{{ subscription_type.final_price }}"></small>
+            {% endif %}
+        </div>
+        <div class="py-4 flex-fill">
+            {% autoescape off %}
+                {{ subscription_type.description|default_if_none:'' }}
+            {% endautoescape %}
+        </div>
+        <div class="payment-buttons">
+            {% if user.is_authenticated %}
+                {% include 'subscription/paypal_button.html' %}
+                {% include 'subscription/stripe_button.html' %}
+            {% endif %}
+        </div>
+    </div>
+</div>

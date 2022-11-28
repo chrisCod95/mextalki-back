@@ -1,0 +1,22 @@
+{% load fullurl %}
+<div class="card mb-3">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand">Referrals</span>
+        <button
+                id="cp-to-clipboard"
+                class="btn btn-outline-primary"
+                data-clipboard-text="{% fullurl 'referral_by_user_name' username=user.slug %}">Copy link</button>
+    </nav>
+    <div class="card-body px-0 py-1">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-coins mr-2" aria-hidden="true"></i>Credits</span>
+                <span class="badge badge-info">{{ user.referral_credits }} credits</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-user-friends mr-2" aria-hidden="true"></i>Referred users</span>
+                <span class="badge badge-info">{{ user.referred_users }}</span>
+            </li>
+        </ul>
+    </div>
+</div>

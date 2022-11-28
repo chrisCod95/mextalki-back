@@ -1,0 +1,36 @@
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --purple: #682444;
+    --sun: #BF9559;
+    --background: #ededed;
+    --snow: #FFFFFF;
+    --black: #000000;
+    --blacky: #373539;
+    --cream: #FFF8F2;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+h1 {
+    font-family: 'Staatliches', cursive;
+}
+
+h2 {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+h3 {
+    font-family: 'Staatliches', cursive;
+}
+.font-staatliches {
+    font-family: 'Staatliches', cursive;
+}

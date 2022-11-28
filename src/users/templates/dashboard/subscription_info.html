@@ -1,0 +1,49 @@
+<div class="card mb-3">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand">My Subscription</span>
+    </nav>
+    <div class="card-body px-0 py-1">
+        <ul class="list-group list-group-flush">
+            {% if user.last_subscription and user.has_active_subscription %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-graduation-cap mr-2" aria-hidden="true"></i>Plan</span>
+                    <span class="badge badge-primary">{{ user.last_subscription.subscription_type.title }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-star mr-2" aria-hidden="true"></i>Status</span>
+                    <span class="badge {% if user.has_active_subscription and user.last_subscription.status != 'CANCELLED' %}badge-success{% else %}badge-danger{% endif %}">
+                        {{ user.last_subscription.get_status_display }}
+                    </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>Subscription date</span>
+                    <span>{{ user.last_subscription.created_at|date:"d/m/Y" }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-clock mr-2" aria-hidden="true"></i>
+                        {% if user.last_subscription.status == 'CANCELLED' %}Subscription end date{% else %}Automatic renewal date{% endif %}
+                    </span>
+                    <span>{% if user.last_subscription.next_billing_time %}{{ user.last_subscription.next_billing_time|date:"d/m/Y" }}{% else %}-{% endif %}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>Subscription price</span>
+                    <div class="text-muted">
+                        <span>${{ user.last_subscription.subscription_type.final_price|stringformat:".2f" }}{{ user.last_subscription.subscription_type.currency }}</span>/<span class="text-lowercase">{{ user.last_subscription.subscription_type.billing_cycle }}</span>
+                    </div>
+                </li>
+                {% if not user.last_subscription.status == 'CANCELLED' %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i>Cancel Subscription</span>
+                        <a class="btn btn-danger btn-sm" href="{% url 'cancel_subscription' %}">Cancel</a>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li class="list-group-item">
+                    <a class="btn btn-success" href="{% url 'subscription' %}">
+                        Subscribe now
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

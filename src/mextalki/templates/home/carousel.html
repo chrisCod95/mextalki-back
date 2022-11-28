@@ -1,0 +1,37 @@
+{% load reverse_url %}
+<div class="container-fluid p-0 carousel-container">
+    <div id="homeCarousel" class="carousel slide h-100" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for carousel in carousel_items %}
+                <li data-target="#homeCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0  == 0 %} active{% endif %}"></li>
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner h-100">
+            {% for carousel in carousel_items %}
+                <div class="carousel-item h-100{% if forloop.counter0  == 0 %} active{% endif %}">
+                    <div class="carousel-caption d-block pt-5">
+                        <h1 class="title">{{ carousel.title }}</h1>
+                            <p class="description"><span>{{ carousel.subtitle }}</span></p>
+                        <div class="mt-5">
+                            <a class="btn btn-lg btn-primary" href="{{ carousel.button_link|reverse_url }}" role="button">{{ carousel.button_text }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+    .carousel-container {
+        background-image: url("{% static 'carousel/carousel.png' %}");
+    }
+    @media only screen and (max-width: 850px) {
+        .carousel-container {
+            background-image: url("{% static 'carousel/carousel_mobile.png' %}");
+        }
+    }
+</style>
+{% endblock %}
+

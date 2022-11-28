@@ -1,0 +1,36 @@
+{% load duration_format %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/lessons/remaining_available_time_alert.css' %}">
+{% endblock %}
+
+{% if not user.is_authenticated %}
+    <div class="alert alert-warning" role="alert">
+        You don't have an account yet &#128531;
+        <a href="{% url 'sign_up' %}">&nbsp;Click here</a>to sign up.
+    </div>
+{% elif user.total_lesson_time == 0 and user.total_practice_time == 0 %}
+    <div class="alert alert-warning" role="alert">
+        You don't have minutes to schedule a lesson &#128531;
+        <br>
+        <a href="{% url 'buy_extra_hours' event_type='lesson' %}">&nbsp;Click here</a>
+        to get more time and keep enjoying your learning.
+    </div>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        <div>
+            {% if user.total_lesson_time > 0 %}
+                <p class="my-1">You still have <span class="badge badge-dark">{{ user.total_lesson_time|duration_format }}</span> available for lessons.</p>
+            {% else %}
+                 You don't have minutes to schedule a lesson. <a href="{% url 'buy_extra_hours' event_type='lesson' %}">&nbsp;Click here to get more time.</a>
+            {% endif %}
+        </div>
+        <div>
+            {% if user.total_practice_time > 0 %}
+                <p class="my-1">And <span class="badge badge-dark">{{ user.total_practice_time|duration_format }}</span> available for practice.</p>
+            {% else %}
+               You don't have minutes to schedule a practice. <a href="{% url 'buy_extra_hours' event_type='practice' %}">&nbsp;Click here to get more time.</a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

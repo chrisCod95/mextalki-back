@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block extra_js %}
+<script src="https://www.google.com/recaptcha/api.js"></script>
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/sign_up_other.css' %}">
+{% endblock %}
+{% block title %}{{ seo_title_prefix }}Login{% endblock %}
+{% block seo_title %}{{ seo_title_prefix }}Login{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <div class="row justify-content-md-center">
+            <div class="col-lg-6">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="jumbotron">
+                    <h1>Login</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="email">{{ form.email.label }}</label>
+                            <input required id="email" name="email" type="text" class="form-control"
+                                   aria-describedby="emailHelpBlock" placeholder="email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{ form.password.label }}</label>
+                            <input required name="password" id="password" type="password" class="form-control"
+                                   aria-describedby="passwordHelpBlock" placeholder="Password">
+                        </div>
+                        <div class="my-3">
+                            <div class="g-recaptcha" data-sitekey="{{ re_captcha_site_key }}"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary px-4">Log in</button>
+                    </form>
+                    <p class="text-center">
+                        <small>Or login with</small>
+                    </p>
+                    <div class="signup-other align-items-center justify-content-around">
+                        <a class="social d-none" href="{% provider_login_url "facebook" process="login" method="oauth2" %}">
+                            <img src="{% static 'facebook_logo.svg' %}"
+                                 width="180" height="180"
+                                 alt="Facebook">
+                            <p>Facebook</p>
+                        </a>
+                        <a class="social" href="{% provider_login_url "google" process="login" %}">
+                            <img src="{% static 'google_logo.svg' %}"
+                                 width="180" height="180"
+                                 alt="Google">
+                            <p>Google</p>
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <p>Don't have a account? <a href="{% url 'sign_up' %}">Sign Up</a></p>
+                        <a href="{% url 'password_reset' %}">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,52 @@
+<style>
+    .sign_in:hover {
+        background-color: {{ extra_hour_color|default:"#251182" }};
+        color: #FFFFFF !important;
+    }
+    .generic_feature_list ul li:hover {
+        border-left:5px solid {{ extra_hour_color|default:"#251182" }} !important;
+    }
+</style>
+<div class="generic_content">
+    <div class="generic_head_price">
+        <div class="py-3 title" style="background-color: {{ extra_hour_color|default:"#251182" }};">
+            <span class="text-white">{{ extra_hour_title|default:"Base" }} price</span>
+        </div>
+        <div class="generic_price_tag">
+            <div class="price">
+                <span class="sign">$</span>
+                <span class="currency">{{ extra_hour_price|stringformat:".0f" }}</span>
+                <span class="month">{{ extra_hour_currency }}/HOUR</span>
+            </div>
+        </div>
+    </div>
+    <div class="generic_feature_list mx-2 mt-2">
+        <div class="container">
+            {% include 'lessons/extra_hours/hours_selector.html' %}
+            {% if render_coupon_form %}
+                {% include 'lessons/extra_hours/coupon_form.html' %}
+            {% endif %}
+            {% include 'lessons/extra_hours/checkout_table.html' %}
+
+        </div>
+    </div>
+    <div class="mx-2 my-3">
+        {% if user.is_authenticated %}
+            {% for hour_option in extra_hour_options %}
+                <div class="mt-1 price-box d-none" id="price-{{ forloop.counter }}">
+                    {% include 'lessons/extra_hours/paypal_button.html' %}
+                    <hr class="my-2"/>
+                    {% include 'lessons/extra_hours/stripe_button.html' %}
+                    {% if swap_button %}
+                        {% include 'lessons/extra_hours/swap_button.html' %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="container">
+                <a class="sign_up" style="border: 1px solid {{ extra_hour_color|default:"#251182" }}; color: {{ extra_hour_color|default:"#251182" }};" href="{% url 'sign_up' %}">Sign up</a>
+                <p class="mt-3 mb-0">Do you have already an account? <a href="{% url 'login' %}">Login</a>.</p>
+            </div>
+            {% endif %}
+    </div>
+</div>

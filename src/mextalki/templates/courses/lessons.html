@@ -1,0 +1,20 @@
+<div id="accordion">
+    {% for level in object.get_levels %}
+        <div class="card mt-2 mt-md-3">
+            <div class="card-header font-weight-bold" id="heading{{ level.id }}">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ level.id }}"
+                        aria-expanded="true" aria-controls="collapse{{ level.id }}">
+                    {{ level.title }}
+                </button>
+            </div>
+            <div id="collapse{{ level.id }}" class="collapse {% if forloop.counter0  == 0 %}show{% endif %}"
+                 aria-labelledby="heading{{ level.id }}" data-parent="#accordion">
+                <div class="card-body">
+                    {% for module in level.get_modules %}
+                        {% include 'courses/module_content.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

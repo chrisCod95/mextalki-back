@@ -1,0 +1,40 @@
+{% load humanize %}
+<div class="card mb-3">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand">Progress</span>
+    </nav>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Exp. points</h6>
+            </div>
+            <div class="col-sm-9">
+                <div class="progress">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         aria-valuenow="{{ user.exp_points_percentage }}"
+                         aria-valuemin="0" aria-valuemax="100"
+                         style="width: {{ user.exp_points_percentage }}%;"
+                    >
+                    </div>
+                    <img class="fire-icon" src="{% static 'fire-icon.png' %}" alt="fire-icon">
+                </div>
+                <span class="text-muted">{{ user.exp_points|floatformat:"0" }} / {{ user.max_point_scale }}</span>
+            </div>
+        </div>
+        {% if leadership_board_place %}
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <span class="badge badge-info">
+                        <span>
+                            Congrats! You are in the
+                            <span class="badge badge-light">{{ leadership_board_place|ordinal }}</span>
+                            place of the Leadership Board.
+                        </span>
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

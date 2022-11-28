@@ -1,0 +1,9 @@
+{% if test %}
+    <div class="container">
+        {% if not score.full_well_answered %}
+            {% include 'podcast/podcast_test/form.html' %}
+        {% else %}
+            {% include 'podcast/podcast_test/full_well_answered.html' %}
+        {% endif %}
+    </div>
+{% endif %}

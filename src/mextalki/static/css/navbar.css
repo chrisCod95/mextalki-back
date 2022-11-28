@@ -1,0 +1,49 @@
+.courses-submenu {
+    position: absolute;
+    top: 130px;
+    left: 159px;
+    background: #343A40;
+}
+
+.announcements-list {
+    width: 250px;
+    text-align: left;
+}
+
+#reminders-button .unread-badge {
+    position: absolute !important;
+    background-color: red;
+    color: white;
+    font-size: 9px;
+    border-radius: 50%;
+    padding: 2px;
+    margin-right: 4px;
+    width: 13px;
+    height: 13px;
+}
+
+/**************************************/
+
+#announcements-button .unread-badge {
+    position: absolute !important;
+    background-color: red;
+    color: white;
+    font-size: 9px;
+    border-radius: 50%;
+    padding: 2px;
+    margin-right: 4px;
+    width: 13px;
+    height: 13px;
+}
+
+@media (min-width: 770px) {
+    .unread-badge {
+        top: 1vh;
+        right: 1vw;
+    }
+}
+
+.reminders-list {
+    width: 250px;
+    text-align: left;
+}

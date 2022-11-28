@@ -1,0 +1,11 @@
+.faq-card {
+    border: 0;
+}
+.faq-question-header {
+    border: 0;
+    border-top: var(--black) 1px solid;
+    border-radius: 0 !important;
+}
+.faq-question-header .btn:focus {
+    box-shadow: none;
+}

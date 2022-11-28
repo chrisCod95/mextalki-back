@@ -1,0 +1,22 @@
+{% load socialaccount %}
+{% get_social_accounts user as accounts %}
+    <div class="card mb-3">
+        <nav class="navbar navbar-light bg-light">
+            <span class="navbar-brand">Linked Accounts</span>
+            {% if accounts %}
+                <a class="btn btn-outline-primary" href="{% url 'socialaccount_connections' %}" tabindex="-1" aria-disabled="true">Edit</a>
+            {% endif %}
+        </nav>
+        <div class="card-body">
+            <div class="row">
+                {% if accounts %}
+                    {% include 'dashboard/connection_list.html' %}
+                {% else %}
+                    <p>
+                        You currently have no linked social network accounts connected to this account.
+                        <a href="{% url 'socialaccount_connections' %}">Add a 3rd Party Account</a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>

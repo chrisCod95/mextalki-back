@@ -1,0 +1,14 @@
+<div class="mt-2">
+    <ul class="list-group list-group-flush">
+        {% for audio in lesson.useful_spanish.get_audios %}
+            <li class="list-group-item bg-dark text-white">
+                <p>
+                    <span class="font-weight-bold">{{ audio.title }}</span> - <span class="font-weight-light font-italic">{{ audio.description }}</span>
+                </p>
+                <audio controls>
+                    <source src="{{ audio.file.url }}"/>
+                </audio>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

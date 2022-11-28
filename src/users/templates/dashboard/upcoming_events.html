@@ -1,0 +1,115 @@
+{% load tz %}
+{% block extra_css %}
+    <style>
+        .disabled-reschedule {
+            background-color: #6FA9FF;
+            color: #FFFF;
+        }
+        .disabled-reschedule:hover {
+            cursor: not-allowed;
+            background-color: #6FA9FF;
+        }
+        .disabled-cancel {
+            background-color: #EB8088;
+            color: #FFFF;
+        }
+        .disabled-cancel:hover {
+            cursor: not-allowed;
+            background-color: #EB8088;
+        }
+    </style>
+{% endblock %}
+<div class="card mb-3">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand">Upcoming Events</span>
+    </nav>
+    {% for scheduled_lesson in scheduled_lessons %}
+        {% timezone scheduled_lesson.time_zone %}
+            <div class="border-bottom p-3">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="d-flex align-items-md-start flex-row flex-md-column h-100">
+                            <h1 class="mb-0 mr-2 text-primary font-weight-normal">{{ scheduled_lesson.start_time|date:"d" }}</h1>
+                            <div>
+                                <p class="font-weight-bold mb-0 text-dark">{{ scheduled_lesson.start_time|date:"M" }}</p>
+                                <p class="mb-0">{{ scheduled_lesson.start_time|date:"Y" }}</p>
+                                {% if scheduled_lesson.is_rescheduled %}
+                                    <span class="badge badge-warning">rescheduled</span>
+                                {% endif %}
+                                {% if scheduled_lesson.event_type.is_lesson %}
+                                    <span class="badge badge-info">Lesson</span>
+                                {% endif %}
+                                {% if scheduled_lesson.event_type.is_conversation_club %}
+                                    <span class="badge badge-info">Conversation club</span>
+                                {% endif %}
+                                {% if scheduled_lesson.event_type.is_practice %}
+                                    <span class="badge badge-info">Practice</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 py-2 py-md-0">
+                        <div class="d-flex justify-content-md-center align-items-md-center flex-column h-100">
+                            <p class="d-block ext-dark font-weight-bold mb-0">{{ scheduled_lesson.event_type }}</p>
+                            <p class="d-block mb-0">{{ scheduled_lesson.start_time|time:"h:i A" }} - {{ scheduled_lesson.end_time|time:"h:i A" }}</p>
+                            <p>{{ scheduled_lesson.time_zone }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 py-2 py-md-0">
+                        <div class="d-flex justify-content-center align-items-center flex-column h-100">
+                            {% if scheduled_lesson.location %}
+                                <a target="_blank" class="btn btn-success btn-block" href="{{ scheduled_lesson.location }}">Join Session</a>
+                            {% else %}
+                                <span>Session in Skype</span>
+                            {% endif %}
+                            {% if not scheduled_lesson.is_rescheduled %}
+                                {% if scheduled_lesson.user_can_reschedule %}
+                                    <a
+                                        target="_blank"
+                                        class="mt-1 btn btn-primary btn-block"
+                                        href="https://calendly.com/reschedulings/{{ scheduled_lesson.provider_invite_id }}"
+                                    >
+                                        reschedule
+                                    </a>
+                                    <a
+                                        target="_blank"
+                                        class="mt-1 btn btn-danger btn-block"
+                                        href="https://calendly.com/cancellations/{{ scheduled_lesson.provider_invite_id }}">
+                                        cancel
+                                    </a>
+                                {% else %}
+                                    <button
+                                        class="btn btn-block btn-primary disabled-reschedule"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Why can’t I reschedule/cancel? 12 hours prior to the starting time of
+                                        the lesson, the session can’t be cancelled and your time will not be restored.
+                                        This is a sign of respect to the time our teachers took to prepare the lesson
+                                        and be available at the original time of the lesson."
+                                    >
+                                        reschedule
+                                    </button>
+                                    <button
+                                        class="btn btn-block btn-danger disabled-cancel"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Why can’t I reschedule/cancel? 12 hours prior to the starting time of
+                                        the lesson, the session can’t be cancelled and your time will not be restored.
+                                        This is a sign of respect to the time our teachers took to prepare the lesson
+                                        and be available at the original time of the lesson."
+                                    >
+                                        cancel
+                                    </button>
+                                {% endif %}
+                           {% endif %}
+                        </div>
+                    </div>
+                </div>
+        </div>
+        {% endtimezone %}
+    {% empty %}
+        <div class="p-3">
+            <span>Not upcoming lessons.</span>
+        </div>
+    {% endfor %}
+</div>

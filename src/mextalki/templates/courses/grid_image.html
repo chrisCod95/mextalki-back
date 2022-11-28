@@ -1,0 +1,9 @@
+<div class="wrapper-grid">
+    {% for image in object.get_grid_pics %}
+        <div class="{% if image.big_size %}big-pic-grid{% endif %}">
+            <p class="div-pic-grid p-1">{{ image.label }}</p>
+            <img class="figure-img" alt="{{ image.label }}" src="{{ image.image.url }}">
+        </div>
+    {% endfor %}
+</div>
+<p class="font-italic font-weight-light mt-3">{{ object.grid_description|default_if_none:""  }}</p>

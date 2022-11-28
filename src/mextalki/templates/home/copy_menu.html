@@ -1,0 +1,33 @@
+<div class="container-fluid bg-dark text-white">
+    <div class="container">
+        <div class="text-center text-uppercase py-5 mb-2 mb-md-4">
+            <h3>Your Mexican Spanish Hub</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row mb-4 mb-md-5">
+        <div class="col">
+            {% for copy in main_copy %}
+                {% autoescape off %}
+                    {{ copy.text }}
+                {% endautoescape %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="text-center">
+            <h3 class="what-we-offer">What we offer</h3>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center flex-wrap">
+        {% for section in copy_sections %}
+        <div class="p-2 copy-link">
+            <a href="#{{ section.title }}" tabIndex="{{ forloop.counter }}">
+                <i class="{{ section.icon }} copy-icon"></i>
+                <p>{{ section.title }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>

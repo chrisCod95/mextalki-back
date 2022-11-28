@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+{% load has_active_chat %}
+
+{% block extra_css %}
+    <link href="{% static 'css/forum/chats.css'%}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="messaging mt-3">
+            <div class="inbox_msg">
+                <div class="inbox_people">
+                    <div class="headind_srch">
+                        <div class="recent_heading">
+                            <h4>Chats <i class="fas fa-comments"></i></h4>
+                        </div>
+                    </div>
+                    <div class="inbox_chat">
+                        {% for chat in chats %}
+                            <div class="chat_list">
+                                {% for user in chat.users.all %}
+                                    {% if user != request.user %}
+                                        <a href="{% url 'chat_detail' user_uid_b64=user.uid %}">
+                                            <div class="chat_people">
+                                                <div class="chat_img">
+                                                    {% if user.profile_picture %}
+                                                        <img src="{{ user.profile_picture.url }}" alt="">
+                                                    {% else %}
+                                                        <img src="https://ptetutorials.com/images/user-profile.png"
+                                                            alt="">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="chat_ib">
+                                                    <h5 class="mt-2">{{ user.username }}</h5>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        {% if not user.is_teacher %}
+                            <div class="headind_srch">
+                                <div class="recent_heading">
+                                    <h4>Teachers <i class="fa fa-users"></i></h4>
+                                </div>
+                            </div>
+                            {% for user in teachers_to_chat %}
+                                {% if not user.uid|has_active_chat:request.user %}
+                                    <div class="chat_list">
+                                        <a href="{% url 'chat_detail' user_uid_b64=user.uid %}">
+                                            <div class="chat_people">
+                                                <div class="chat_img">
+                                                    {% if user.profile_picture %}
+                                                        <img src="{{ user.profile_picture.url }}" alt="">
+                                                    {% else %}
+                                                        <img src="https://ptetutorials.com/images/user-profile.png"
+                                                            alt="">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="chat_ib">
+                                                    <h5 class="mt-2">{{ user.username }}</h5>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mesgs">
+                    <div class="chat-head d-flex justify-content-center">
+                        <h5 class="bg-secondary text-light py-2 rounded-pill w-50">
+                            <img class="user-profile-pic"
+                                 src="{{ user_to_chat.mask }}"
+                                 alt="profile_pic">
+                            {{ user_to_chat.username }}
+                        </h5>
+                    </div>
+                    <div id="{{user_chat.chat_uuid}}" class="msg_history">
+                        {% for message in user_chat.messages.all %}
+                            {% if message.user == user %}
+                                <div class="outgoing_msg">
+                                    <div class="sent_msg">
+                                        <p>{{ message.content }}</p>
+                                        <span class="time_date">{{ message.created_at|date:"g:i a | D M j" }}</span>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="incoming_msg">
+                                    <div class="received_msg received_withd_msg">
+                                        <p>{{ message.content }}</p>
+                                        <span class="time_date">{{ message.created_at|date:"g:i a | D M j" }}</span>
+                                    </div>
+                                </div>
+                            {% endif %} 
+                        {% endfor %}
+                    </div>
+                    <div class="type_msg">
+                        <form id="form">
+                            <div class="input_msg_write">
+                                <input type="text" class="write_msg form-control" name="message" placeholder="Type a message" aria-describedby="button-addon2"/>
+                                <button class="msg_send_btn" type="submit" id="button-addon2">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+        const userChatUuid = "{{user_chat.chat_uuid}}"
+        const username = "{{user.username}}"
+        const user_id = "{{ user.uid }}"
+        const url = `wss://${ window.location.host }/ws/socket-server/`
+        const date = new Date();
+        const formatDate = `${date.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true})} |
+                            ${date.toLocaleString('en-US', {weekday: 'short', month: 'short', day: 'numeric'})}`
+
+        const chatSocket = new WebSocket(url)
+
+        chatSocket.onmessage = function(e) {
+            let data = JSON.parse(e.data)
+            if(data.type === 'chat'){
+                let messages = document.getElementById(userChatUuid)
+                if (data.chat_uuid === userChatUuid) {
+                    messages.insertAdjacentHTML(
+                        'beforeend',
+                        `<div class=${data.user_id === user_id ? 'outgoing_msg' : 'incoming_msg'}>
+                            <div class=${data.user_id === user_id ? 'sent_msg' : 'received_msg'}>
+                                <p>${data.message}</p>
+                                <span class="time_date">
+                                    ${formatDate}
+                                </span>
+                            </div>
+                        </div>`
+                    )
+                    scrollToBottom();
+                }
+            }
+        }
+
+        let form = document.getElementById('form')
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            let message = e.target.message.value
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'userChatUuid': userChatUuid,
+                'username': username,
+                'user_id': user_id,
+            }))
+            form.reset()
+        })
+
+        function scrollToBottom() {
+            let messages = document.getElementById(userChatUuid)
+            messages.scrollTop = messages.scrollHeight;
+        }
+        scrollToBottom();
+    </script>
+{% endblock %}

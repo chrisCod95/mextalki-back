@@ -1,0 +1,46 @@
+#player .able {
+    z-index: 1;
+}
+#transcript .able-transcript-area {
+    z-index: 1;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+input[type=radio] + label {
+    width: 95%;
+    border: solid 2px #ffaa00de;
+    padding: 0.5em;
+    border-radius: 10px;
+} 
+input[type=radio]:checked + label {
+    background-color: #ffaa00de !important;
+} 
+
+.well-answered-card .congrats {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.well-answered-card .emojis {
+    font-size: 17px;
+}
+
+.well-answered-card .scored {
+    font-weight: bold;
+}
+
+.well-answered-card #link{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.well-answered-card #button {
+    color: #fff !important;
+    background-color: #017BFE !important;
+    padding: 2%;
+    border-radius: 5%;
+    text-decoration: none;
+}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Cancel subscription{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Cancel subscription{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}
+
+{% block content %}
+    <div class="container my-4">
+        <div class="row justify-content-md-center">
+            <div class="col-lg-6">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                {{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                <div class="jumbotron">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h3>We're sorry to see you go!</h3>
+                        <p>Your
+                            <span class="text-lowercase">{{ subscription.subscription_type.get_billing_cycle_display }}</span>
+                            subscription is paid until {{ subscription.next_billing_time|date:"M d, Y" }}. If you
+                            would like to proceed with canceling your subscription, please select
+                            <span class="font-italic">"Cancel Subscription"</span>
+                            below.</p>
+                        <div class="alert alert-warning">
+                            <span>Are you sure? After {{ subscription.next_billing_time|date:"M d, Y" }} you will not have access to:</span>
+                            <div class="cancel_list">{% autoescape off %}
+                                {{ subscription.subscription_type.description }}{% endautoescape %}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.reason.id_for_label }}">{{ form.reason.label }}</label>
+                            <select class="form-control" id="{{ form.reason.id_for_label }}" name="{{ form.reason.html_name }}">
+                                {% for value, display in form.reason.field.choices %}
+                                    <option value="{{ value }}">{{ display }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="{{ form.confirm.id_for_label }}"
+                                       name="{{ form.confirm.html_name }}">
+                                <label class="form-check-label" for="{{ form.confirm.id_for_label }}">Confirm Cancel subscription</label>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary" href="{% url 'dashboard' %}" role="button">Undo</a>
+                        <button type="submit" class="btn btn-danger">Cancel Subscription</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

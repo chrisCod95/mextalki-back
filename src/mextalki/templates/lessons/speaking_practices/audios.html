@@ -1,0 +1,15 @@
+<div class="collapse mt-2" id="audioCollapse">
+    <ul class="list-group list-group-flush">
+        {% for audio in lesson.speaking_practice.get_audios %}
+            <li class="list-group-item bg-dark text-white">
+                <span class="font-weight-bold">{{ forloop.counter }}. {{ audio.title }}</span>
+                {% autoescape off %}
+                    <p>{{ audio.description }}</p>
+                {% endautoescape %}
+                <audio controls>
+                    <source src="{{ audio.file.url }}"/>
+                </audio>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

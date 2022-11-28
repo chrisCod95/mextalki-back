@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}{{ object.title }}{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}{{ object.title }}{% endblock %}
+{% block og_image %}{{ object.thumbnail_url }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/ableplayer/ableplayer.min.css' %}">
+    <style>
+        body {
+            background-color: var(--background);
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/test.css' %}">
+    <style>
+        body {
+            background-color: var(--background);
+        }
+
+        h1 {
+            margin-top: 1em;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/videos/video_detail.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/js-cookie/js.cookiev2.0.4.js' %}"></script>
+    <script src="{% static 'js/ableplayer/ableplayer.min.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script>
+            const redeem_points_url = '{% url 'redeem_points_to_common_video_score' user_uid_b64=user.uid video_id=object.pk %}';
+        </script>
+        <script src="{% static 'js/podcast_points.js' %}"></script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="bg-dark text-light text-center">{{ object.title }}</h1>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 d-flex justify-content-center">
+                <div id="player">
+                    <video data-able-player data-skin="2020" id="video1" width="542" height="313" preload="auto" data-youtube-id="{{ object.youtube_video_id }}" data-transcript-div="transcript" data-use-chapters-button="false" data-include-transcript="false" playsinline>
+                        {% if object.captions and user.has_active_subscription %}
+                            <track kind="captions" src="{{ object.captions.url }}"/>
+                        {% endif %}
+                    </video>
+                    {% include 'video/video_score.html' %}
+                    <div class="col-12 mt-4">
+                        <p class="d-inline font-weight-bold">Tags: </p>
+                        {% for tag in object.tags.all %}
+                            <a href="{% url 'videos_list' %}?tag={{ tag.slug }}" class="badge badge-primary">{{ tag|capfirst }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

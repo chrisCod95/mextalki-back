@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forum/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-2">
+							<h5 class="card-header"><i class="fas fa-rocket mr-3"></i>Mextalki Challenge - {{ challenge.title }}</h5>
+                <div class="card-body">
+                    <div class="instructions">
+											{% autoescape off %}
+												{{ challenge.content }}
+											{% endautoescape %}
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ challenge.created_at|timesince }} ago
+                </div>
+                {% if user_answer %}
+                    <div class="card-footer">
+                        <b>Your Answer</b>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    {% if user_answer %}
+                        {% if user_answered_correctly %}
+                            <div class="alert alert-success">
+                                Congrats! &#129395 &#127881 <br> You've earned 20 exp points on this challenge.
+                            </div>
+                        {% endif %}
+                        <span class="badge badge-success">{{ user_answer.user.username }}</span>
+                        <span class="badge badge-secondary">{{ user_answer.created_at|timesince }} ago</span>
+                        <p>{{ user_answer.content }}</p>
+                        {% if user.is_staff and not user_answered_correctly %} 
+                            <form action="{% url 'challenge_correct_answer' user_uid_b64=user.uid comment_id=user_answer.pk %}" class="like-form"  method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary btn-sm">Correct Answer</button> 
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <form action="#" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="post_id" id="post_id" value="{{ challenge.post.pk }}">
+                            {% for field in form %}
+                            <div class="form-group">
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                        </form>   
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <b>Other Mextalkers Answers</b>
+                </div>
+                {% for comment in comments %}
+                    <div class="card-body">
+                        <span class="badge badge-success">{{ comment.user.username }}</span>
+                        <span class="badge badge-secondary">{{ comment.created_at|timesince }} ago</span>
+                        <p>{{ comment.content }}</p>
+                        {% if user.is_staff and not comment.is_challenge_correct_answer %}
+                            <form action="{% url 'challenge_correct_answer' user_uid_b64=user.uid comment_id=comment.pk %}" class="like-form"  method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary btn-sm">Correct Answer</button> 
+                            </form>
+                        {% elif user.is_staff and comment.is_challenge_correct_answer %}
+                            <small class="alert alert-info">A Mextalki admin set this answer as correct</small>
+                        {% endif %}
+                    </div>    
+                    <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script type="text/javascript" src="{% static 'js/copy-to-clipboard.js' %}"></script>
+{% endblock %}

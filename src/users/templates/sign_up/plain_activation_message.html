@@ -1,0 +1,8 @@
+{% autoescape off %}
+Welcome {{ user.username }}!
+First, you need to verify your account. Just press the button below.
+http://{{ domain }}{% url 'verify_email' uidb64=uid token=token %}
+If you think, it's not you, then just ignore this email.
+
+Cheers, {{ site_name }} Team
+{% endautoescape %}

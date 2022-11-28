@@ -1,0 +1,11 @@
+{% if lesson.useful_spanish %}
+<div class="container my-2 my-md-3">
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+            <h5 class="card-title">Useful Spanish</h5>
+            <div class="dropdown-divider"></div>
+            {% include 'lessons/useful_spanish/audios.html' %}
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,14 @@
+<div class="card bg-dark text-white">
+    <div class="card-body well-answered-card">
+        <h5 class="card-title">{{test.title}}</h5>
+        <div class="dropdown-divider"></div>
+        <div class="alert alert-success" role="alert">
+            <span class="congrats">Congrats!</span><span class="emojis">&#129395 &#127881</span><br>
+            <span class="scored">You’ve scored: </span>{{ score.exp_points|floatformat }} exp points.<br>
+            You’ve completed this course passing this last lesson, please click <a id="link" href="{% url 'course_detail' slug=course_slug %}">here</a> to continue with your learning.
+        </div>
+        {% if next_lesson %}
+            <a class="mt-3" id="button" href="{% url 'lesson_detail' course=course_slug lesson=next_lesson.slug %}">Next Lesson</a>
+        {% endif %}
+    </div>
+</div>

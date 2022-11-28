@@ -1,0 +1,26 @@
+{% if video_score.user_already_get_points %}
+<div class="alert alert-success" role="alert">
+    <small>
+    You've scored {{ video_score.exp_points|floatformat }} exp points by watching this podcast.<br>
+    </small>
+</div>
+{% elif video_score %}
+<div class="video-score-container bg-dark text-light p-1">
+    <span class="p-0" id="video-score"></span>
+    <span>exp points</span>
+</div>
+<button class="btn btn-primary mt-2 btn-block" id="redeem-points-early">
+    <i
+        class="far fa-question-circle"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="Reedem the points that you have achieved so far. You won’t be able to achieve more points on this video."
+    ></i>
+    Redeem points early
+</button>
+{% else %}
+<div class="alert alert-warning">
+    You aren't enjoying Mextalki full experience &#128532;<br>
+    <a href="{% url 'login' %}">Login</a> to get points and rewards for watching this video &#127873;
+</div>
+{% endif %}

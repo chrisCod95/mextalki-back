@@ -1,0 +1,8 @@
+<div class="btn-group d-flex" role="group" aria-label="button">
+    <button class="btn btn-primary mr-1" {% if disable_lp_transcription_button %}disabled{% endif %} type="button" data-toggle="collapse" data-target="#transcriptsCollapse"
+            aria-expanded="false" aria-controls="transcriptsCollapse">Show Transcripts
+    </button>
+    <button class="btn btn-primary ml-1" {% if disable_lp_show_answers_button %}disabled{% endif %} type="button" data-toggle="collapse" data-target="#answersCollapse"
+            aria-expanded="false" aria-controls="answersCollapse">Show Answers
+    </button>
+</div>

@@ -1,0 +1,120 @@
+<nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static 'mextalki_transparent_logo.png' %}" width="120" alt="{{ seo_site_name }}">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Learn
+                    </a>
+                    <div class="dropdown-menu bg-dark text-light w-100" aria-labelledby="navbarDropdownLearn">
+                        <a class="nav-link" href="{% url 'podcast' %}">
+                            Podcast
+                        </a>
+                        <a class="nav-link"  href="{% url 'videos_list' %}">
+                            Videos
+                        </a>
+                        <a class="nav-link courses-button" href="#">
+                            Courses &raquo;
+                        </a>
+                    </div>
+                    <div class="courses-submenu dropdown-menu">
+                        {% for course in courses %}
+                            <a class="nav-link"  href="{% url 'course_detail' slug=course.slug %}">{{ course.title }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog_post_list' %}">
+                        Blog
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url  'lessons' %}">
+                        Lessons
+                    </a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="{% url 'conversation_club' %}">
+                            Conversation club
+                        </a>
+                </li>
+                {% if not user.has_active_subscription %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'subscription' %}">
+                            Subscription
+                        </a>
+                    </li>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sign_up' %}">
+                            Sign Up
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-secondary" href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hello, {{user.username}}
+                            <img src="{{ user.mask }}" alt="mask" class="rounded-circle mb-1" width="25">
+                        </a>
+                        <div class="dropdown-menu bg-dark w-100" aria-labelledby="dropdownMenuLink">
+                            <a class="nav-link btn btn-outline-secondary border-0 text-left ml-1" href="{% url 'dashboard' %}">
+                               <i class="fas fa-user-circle"></i> Profile
+                            </a>
+                            <a class="nav-link btn btn-outline-secondary border-0 text-left ml-1" href="{% url 'logout' %}">
+                               <i class="fas fa-sign-out-alt"></i> Log Out
+                            </a>
+                        </div>
+                    </li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li class="dropdown nav-item ml-3">
+                        <button class="btn btn-secondary" type="button" id="announcements-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bullhorn announcements-icon"></i>
+                        </button>
+                        <div class="dropdown-menu bg-dark announcements-list" aria-labelledby="announcements-button">
+                            <h6 class="dropdown-header text-center">
+                                <i class="fas fa-bullhorn"></i> Announcements
+                            </h6>
+                            {% for announcement in announcements %}
+                                <a class="nav-link btn text-primary text-left" href="{% url 'announcement_detail' slug=announcement.slug %}">
+                                    <small class="font-weight-bold announcement-link">{{ announcement.title|truncatechars:25 }}</small>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="dropdown nav-item ml-1">
+                        <button class="btn btn-secondary" type="button" id="reminders-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="far fa-bell reminders-icon"></i>
+                        </button>
+                        <div class="dropdown-menu bg-dark reminders-list" aria-labelledby="reminders-button">
+                            <h6 class="dropdown-header text-center">
+                                <i class="far fa-bell"></i> Reminders
+                            </h6>
+                            {% for reminder in reminders %}
+                                <a class="nav-link btn text-primary text-left" href="{{ reminder.location }}">
+                                    <small class="font-weight-bold reminder-link">
+                                        Your lesson with {{ reminder.teacher }}
+                                        starts in {{ reminder.start_time|timeuntil }}
+                                    </small>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

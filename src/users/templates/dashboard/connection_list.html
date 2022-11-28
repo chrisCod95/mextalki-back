@@ -1,0 +1,16 @@
+{% for provider, provider_accounts in accounts.items %}
+    {% for base_account in provider_accounts %}
+        {% with base_account.get_provider_account as account %}
+            <div class="col-sm-3 d-flex align-items-center">
+                {% with ''|add:account.get_brand.name|add:'_logo.svg' as image_static %}
+                    <img src="{% static image_static %}"
+                         width="20" height="20"
+                         alt="{{ account.get_brand.name }}">
+                {% endwith %}
+            </div>
+            <div class="col-sm-9 text-secondary">
+                <span>{{ account }}</span>
+            </div>
+        {% endwith %}
+    {% endfor %}
+{% endfor %}

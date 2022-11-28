@@ -1,0 +1,18 @@
+{% load socialaccount %}
+
+<p>Add a 3rd Party Account</p>
+
+<div class="signup-other">
+    <a class="social inverse d-none" href="{% provider_login_url "facebook" process="connect" method="oauth2" %}">
+        <img src="{% static 'facebook_logo.svg' %}"
+             width="180" height="180"
+             alt="Facebook">
+        <p>Facebook</p>
+    </a>
+    <a class="social inverse" href="{% provider_login_url "google" process="connect" %}">
+        <img src="{% static 'google_logo.svg' %}"
+             width="180" height="180"
+             alt="Google">
+        <p>Google</p>
+    </a>
+</div>

@@ -1,0 +1,28 @@
+{% load seat_format %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+    <span><i class="fas fa-clock mr-2" aria-hidden="true"></i>Available Conversation Club Events</span>
+    <span class="badge badge-info">{{ user.total_available_conversation_club_slots|seat_format }}</span>
+</li>
+{% if user.verified %}
+        <li class="list-group-item">
+            <div class="row">
+                {% if user.total_available_conversation_club_slots > 0 %}
+                    <div class="col-12">
+                        <a class="btn btn-primary btn-sm" href="{% url 'conversation_club' %}">Schedule conversation club</a>
+                    </div>
+                {% endif %}
+                <div class="mt-2 col-12">
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'no_seats_conversation_club' %}">Get extra seats</a>
+                    {% if user.referral_credits > 0 %}
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'exchange_credits_convo_club' %}">Exchange credits</a>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+{% else %}
+<li class="list-group-item">
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        In order to get a lesson you first need to verify your email: {{ user.email }}
+    </div>
+</li>
+{% endif %}

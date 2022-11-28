@@ -1,0 +1,18 @@
+{% if not disable_sp_exercises_button and not disable_sp_audios_button %}
+<div class="btn-group d-flex" role="group" aria-label="button">
+    <button class="btn btn-primary mx-1" type="button" data-toggle="collapse" data-target="#resourcesCollapse"
+            aria-expanded="false" aria-controls="audioCollapse">Resources
+    </button>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#audioCollapse"
+            aria-expanded="false" aria-controls="audioCollapse">Audios
+    </button>
+</div>
+{% elif not disable_sp_exercises_button %}
+    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#resourcesCollapse"
+            aria-expanded="false" aria-controls="audioCollapse">Resources
+    </button>
+{% elif not disable_sp_audios_button %}
+    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#audioCollapse"
+            aria-expanded="false" aria-controls="audioCollapse">Audios
+    </button>
+{% endif %}

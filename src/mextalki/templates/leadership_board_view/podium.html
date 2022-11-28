@@ -1,0 +1,15 @@
+{% for leader in podium %}
+    <div class="row podium">
+        <div class="col-3 d-flex align-items-center justify-content-center trophy">
+            <i class="fas {% if forloop.counter == 1 %} fa-trophy {% else %} fa-medal {% endif %} trophy-{{forloop.counter}}"></i>
+        </div>
+        <div class="col-6 text-center mt-3">
+            <p class="">{{ leader.user.username }}</p>
+        </div>
+        <div class="col-3 justify-content-center img-place-{{ forloop.counter }}">
+            <div class="profile-pic">
+                <img src="{% if leader.user.profile_picture %}{{ leader.user.profile_picture.url }}{% else %}{{ leader.user.mask }}{% endif %}" alt="mask">
+            </div>
+        </div>
+    </div>
+{% endfor %}

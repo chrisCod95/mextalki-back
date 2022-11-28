@@ -1,0 +1,46 @@
+<div class="card h-100">
+    <img class="card-img-top" src="{{ teacher.image.url }}" alt="{{ teacher.name }}">
+    <div class="card-body d-flex flex-column justify-content-between">
+        <h4 class="card-title">{{ teacher.name }}</h4>
+        <div class="card-text">{% autoescape off %}{{ teacher.description }}{% endautoescape %}
+            {% if teacher.presentation_video %}
+                <p><a href="{{ teacher.presentation_video }}" data-toggle="lightbox">View Video</a></p>
+            {% endif %}
+        </div>
+        {% if teacher.reviews.count %}
+            <h4 class="font-staatliches">Teacher Reviews</h4>
+            <div class="row">
+                {% for testimonial in teacher.reviews.all %}
+                <div class="col-md-4">
+                    <img data-toggle="tooltip" data-placement="top" title="{{ testimonial.review }}"
+                            class="testimonial-thumbnail" alt="{{ testimonial.name }}" src="{{ testimonial.thumbnail.url }}">
+                    <h4 class="testimonial-name">{{testimonial.name}}</h4>
+                    <p class="testimonial-subtitle">{{testimonial.subtitle}}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="row justify-content-center">
+            {% if teacher.lesson_events %}
+                <div class="col-12 col-md-6">
+                    <p>Schedule Lesson</p>
+                    <div class="text-center">
+                        {% for event_type in teacher.lesson_events %}
+                            {% include 'schedule_button.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if teacher.practice_events %}
+                <div class="col-12 col-md-6">
+                    <p>Schedule Practice</p>
+                    <div class="text-center">
+                        {% for event_type in teacher.practice_events %}
+                            {% include 'schedule_button.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

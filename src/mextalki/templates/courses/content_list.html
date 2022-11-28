@@ -1,0 +1,8 @@
+<ul class="list-group">
+    {% for content in object.get_content_list %}
+        <li class="list-group-item">
+            <i style="color: {{ content.color }};" class="fas fa-check-square" aria-hidden="true"></i>
+            <span class="ml-2">{{ content.label }}</span>
+        </li>
+    {% endfor %}
+</ul>

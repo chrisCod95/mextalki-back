@@ -1,0 +1,27 @@
+<form method="post">
+    {% csrf_token %}
+    <div class="form-row align-items-center my-2">
+        <div class="col-12 col-md-8">
+            <label class="sr-only" for="{{ form.promo_code.id_for_label }}">{{ form.promo_code.label }}</label>
+            <input
+                type="text"
+                class="form-control"
+                id="{{ form.promo_code.id_for_label }}"
+                name="{{ form.promo_code.html_name }}"
+                value="{{ form.promo_code.value|default_if_none:"" }}"
+                placeholder="{{ form.promo_code.label }}">
+        </div>
+        <div class="col-12 col-md-4 mt-2 mt-md-0">
+            <button type="submit" class="btn btn-primary btn-block">Enter coupon</button>
+        </div>
+    </div>
+</form>
+{% if show_valid_coupon %}
+    <div
+        class="alert{% if is_valid_coupon %} alert-success{% else %} alert-warning{% endif %} alert-dismissible"
+        role="alert">
+        {{ message }}
+        {% if is_valid_coupon %} {{ user.username }}. {% endif %}
+    </div>
+{% endif %}
+

@@ -1,0 +1,53 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex flex-column align-items-center text-center">
+            <div class="user-mask-name">
+                <h4>{{ user.mask_name }}</h4>
+                <i class="far fa-question-circle mask-more-info" data-toggle="modal" data-target="#mask-info-modal"></i>
+            </div>
+            <div class="avatar w-100">
+                <img src="{{ user.mask }}" alt="mask" class="rounded-circle" width="150">
+            </div>
+            <div class="mt-3">
+                <h4>{{ user.username }}</h4>
+                <p class="text-secondary mb-1">Member since {{ user.date_joined|date:"M Y" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="mask-info-modal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{masks_copy.title}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="how-get-points bg-dark text-light mb-5">
+                    {% autoescape off %}
+                    {{masks_copy.how_get_points}}
+                    {% endautoescape %}
+                </p>
+                <hr>
+                <ul class="list-unstyled">
+                    {% for mask in masks_copy.masks.all %}
+                    <li class="media my-5">
+                        <img class="mr-3 w-25" src="{{ mask.mask_image.url }}" alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">{{ mask.title }}</h5>
+                            {% autoescape off %}
+                            {{ mask.info }}
+                            {% endautoescape %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

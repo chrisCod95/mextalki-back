@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}{{ lesson.title }}{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}{{ lesson.title }}{% endblock %}
+{% block content %}
+    <div class="container-fluid" style="background-color: {{ lesson.color }};">
+        {% include 'lessons/header.html' %}
+    </div>
+    <div class="container my-4">
+        {% if user.is_authenticated %}
+            <div class="alert alert-danger" role="alert">
+                In order to have access to this section, please become a member <a href="{% url 'subscription' %}">Get your membership now</a>
+            </div>
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                In order to have access to this section, please <a class="alert-link" href="{% url 'login' %}">login</a>, or <a href="{% url 'sign_up' %}" class="alert-link">sign up</a>.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

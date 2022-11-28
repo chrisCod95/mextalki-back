@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/ekko-lightbox/ekko-lightbox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gridpic.css' %}">
+    <link rel="stylesheet" href="{% static 'css/courses/content_list.css' %}">
+    <style>
+    body {
+        background-color: var(--background);
+    }
+    </style>
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'js/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
+{% endblock %}
+
+{% block title %}{{ seo_title_prefix }}{{ object.title }}{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}{{ object.title }}{% endblock %}
+
+{% block content %}
+    <div class="modal fade" tabindex="-1" role="dialog" id="processPaymentModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center text-light bg-dark">
+                    <h3>The payment has been processed.</h3>
+                    <div class="fa-3x">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background-color: {{ object.color }};">
+        {% include 'courses/header.html' %}
+    </div>
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="container">
+                    <h3 style="background-color: {{ object.color }};" class="text-uppercase text-center text-white">What
+                        you will learn</h3>
+                    {% autoescape off %}
+                        {{ object.learn_description }}
+                    {% endautoescape %}
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="container">
+                    {% include 'courses/grid_image.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container">
+                    <h3 style="background-color: {{ object.color }};" class="text-uppercase text-white">THE COMPLETE
+                        COURSE CONTAINS:</h3>
+                    {% include 'courses/content_list.html' %}
+                    {% if not user.is_authenticated or not user_has_access_to_course %}
+                        <div class="my-3">
+                            {% autoescape off %}
+                                {{ object.course_extend_description }}
+                            {% endautoescape %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if not user.is_authenticated or not user_has_access_to_course %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="container mt-2 mt-md-4">
+                        <a class="btn btn-primary text-center mb-4" href="{% url 'subscription' %}">Get your membership now</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container mt-2 mt-md-4">
+                    {% include 'courses/lessons.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

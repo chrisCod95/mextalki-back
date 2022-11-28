@@ -1,0 +1,19 @@
+.user-card .image-wrapper {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    margin: 1rem 0 1rem 3.5rem;
+}
+
+.user-card .progress-bar {
+    position: relative;
+    background: linear-gradient(90deg, yellow, orange, orangered, red);
+}
+
+.user-card button {
+    font-size: 12px;
+}

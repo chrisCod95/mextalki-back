@@ -1,0 +1,13 @@
+h1 {
+    margin-top: 1em;
+}
+
+.video-score-container {
+    position: absolute;
+    top: 16px;
+    left: 530px;
+    font-size: 14px;
+    z-index: 1000;
+    border-radius: 0 0 20% 20%;
+}
+

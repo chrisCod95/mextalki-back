@@ -1,0 +1,33 @@
+<div id="testimonials" class="mb-3">
+    <div class="container-fluid bg-dark text-white">
+        <div class="container">
+            <div class="text-center text-uppercase py-5 mb-2 mb-md-4">
+                <h3>What Our Students Are Saying About Us</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="testimonialsCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators testimonials-carousel-indicators">
+                {% for page in carousel_testimonials %}
+                    <li data-target="#testimonialsCarousel" data-slide-to="{{ forloop.counter0 }}"{% if forloop.first %} class="active"{% endif %}></li>
+                {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+                {% for page in carousel_testimonials %}
+                    <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                        <div class="d-block w-100">
+                            <div class="row">
+                                {% for testimonial in page %}
+                                    <div class="col-12 col-md-4 my-2 my-md-0">
+                                        {% include 'home/testimonial_card.html' %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

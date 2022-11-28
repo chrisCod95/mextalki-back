@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block extra_js %}
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="{% static 'js/sign_up.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sign_up_other.css' %}">
+{% endblock %}
+{% block title %}{{ seo_title_prefix }}Sign Up{% endblock %}
+{% block seo_title %}{{ seo_title_prefix }}Sign Up{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+
+        <div class="row justify-content-md-center">
+            <div class="col-lg-6">
+            {% if referred_by %}
+                <div class="alert alert-info">You've been invited to Mextalki by <b>{{ referred_by }}</b></div>
+            {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                {{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                <div class="jumbotron">
+                    <h1>Sign Up</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">{{ form.username.label }}</label>
+                            <input required id="username" name="username" type="text" class="form-control"
+                                   aria-describedby="userNameHelpBlock" placeholder="username">
+                            <small id="userNameHelpBlock"
+                                   class="form-text text-muted">{{ form.username.help_text }}</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">{{ form.first_name.label }}</label>
+                            <input required id="first_name" name="first_name" type="text" class="form-control"
+                                   aria-describedby="firstNameHelpBlock" placeholder="First Name">
+                            <small id="firstNameHelpBlock"
+                                   class="form-text text-muted">{{ form.first_name.help_text }}</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">{{ form.last_name.label }}</label>
+                            <input required id="last_name" name="last_name" type="text" class="form-control"
+                                   aria-describedby="lastNameHelpBlock" placeholder="Last Name">
+                            <small id="lastNameHelpBlock"
+                                   class="form-text text-muted">{{ form.last_name.help_text }}</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">{{ form.email.label }}</label>
+                            <input required id="email" name="email" type="email" class="form-control"
+                                   aria-describedby="emailHelpBlock" placeholder="email@example.com">
+                            <small id="emailHelpBlock" class="form-text text-muted">{{ form.email.help_text }}</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password1">{{ form.password1.label }}</label>
+                            <input
+                                    onkeyup="trigger()"
+                                    required
+                                    name="password1"
+                                    id="password1"
+                                    type="password"
+                                    class="form-control"
+                                    aria-describedby="password1HelpBlock" placeholder="Password">
+                            <div class="indicator">
+                                <span class="weak"></span>
+                                <span class="medium"></span>
+                                <span class="strong"></span>
+                            </div>
+                            <div class="indicator-text">Your password is too weak</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password2">{{ form.password2.label }}</label>
+                            <input required id="password2" name="password2" type="password" class="form-control"
+                                   aria-describedby="password2HelpBlock" placeholder="Password confirmation">
+                            <small id="password2HelpBlock"
+                                   class="form-text text-muted">{{ form.password2.help_text }}</small>
+                        </div>
+                        <div class="form-group">
+                            <small class="text-muted">
+                                <i class="fas fa-exclamation-circle"></i>
+                                By completing the registration process you accept our 
+                                <a href="{% url 'terms_of_use' %}">terms of use </a>
+                                and our 
+                                <a href="{% url 'privacy_policy' %}">privacy policy</a>.
+                            </small>
+                        </div>
+                        <div class="my-3">
+                            <div class="g-recaptcha" data-sitekey="{{ re_captcha_site_key }}"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary px-4">Sign Up</button>
+                        <p class="text-center">
+                            <small>Or signup with</small>
+                        </p>
+                        <div class="signup-other align-items-center justify-content-around">
+                            <a class="social d-none" href="{% provider_login_url "facebook" process="login" method="oauth2" %}">
+                                <img src="{% static 'facebook_logo.svg' %}"
+                                     width="180" height="180"
+                                     alt="Facebook">
+                                <p>Facebook</p>
+                            </a>
+                            <a class="social" href="{% provider_login_url "google"  process="login" %}">
+                                <img src="{% static 'google_logo.svg' %}"
+                                     width="180" height="180"
+                                     alt="Google">
+                                <p>Google</p>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

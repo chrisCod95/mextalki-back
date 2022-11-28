@@ -1,0 +1,28 @@
+{% load duration_format %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+    <span><i class="fas fa-clock mr-2" aria-hidden="true"></i>Available Practice Time</span>
+    <span class="badge badge-info">{{ user.total_practice_time|duration_format }}</span>
+</li>
+{% if user.verified %}
+    <li class="list-group-item">
+        <div class="row">
+            {% if user.total_practice_time > 0 %}
+                <div class="col-12">
+                    <a class="btn btn-primary btn-sm" href="{% url 'lessons' %}">Schedule Practice</a>
+                </div>
+            {% endif %}
+            <div class="mt-2 col-12">
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'buy_extra_hours' event_type='practice' %}">Get extra hours</a>
+                {% if user.referral_credits > 0 %}
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'exchange_credits' event_type='practice' %}">Exchange credits</a>
+                {% endif %}
+            </div>
+        </div>
+    </li>
+{% else %}
+<li class="list-group-item">
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        In order to get a conversation practice you first need to verify your email: {{ user.email }}
+    </div>
+</li>
+{% endif %}

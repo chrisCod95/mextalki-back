@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% load reverse_url %}
+{% block title %}{{ seo_title_prefix }}Conversation Club{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Conversation Club{% endblock %}
+
+{% block extra_css %}
+    <style>
+        body {
+            background-color: var(--background);
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/ekko-lightbox/ekko-lightbox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/conversation_club_info.css' %}">
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'js/moment/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/moment/moment_timezone.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/conversation_club_tz.js' %}"></script>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container-fluid hero-container mb-5">
+    <img class="hero-img" src="{% static 'images/conversation_club_hero.jpg' %}" alt="hero-image">
+    <div class="row">
+        <h1 class="display-4 text-light">{{conversation_club_info.title}}</h1>
+    </div>
+    <div class="row">
+        <p class="lead text-light">{{conversation_club_info.subtitle}}</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% autoescape off %}
+            {{ conversation_club_info.club_info }}
+            {% endautoescape %}
+            {% if conversation_club_info.button_link %}
+                <div class="d-flex justify-content-center mt-2">
+                    <a class="btn btn-lg btn-primary" href="{{ conversation_club_info.button_link|reverse_url }}" role="button">{{ conversation_club_info.button_text|default_if_none:"" }}</a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1 class="text-center schedule-section">Schedule</h1>
+            <div class="row d-flex justify-content-center mb-3">
+                <a class="btn btn-primary" href="{{ conversation_club_info.video_example_url }}" data-toggle="lightbox">
+                    Example of an advanced session
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 schedule">
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                        {% for schedule in conversation_club_info.schedules_list.all %}
+                            <tr>
+                                <td>{{ schedule.get_day_display }}</td>
+                                <td class='text-center'>{{ schedule.hour|date:'H:i' }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <p class="text-center">America/Mexico_City</p>
+                </div>
+                <div class="col-md-6 col-sm-12 schedule">
+                    <table class="table table-striped table-bordered">
+                        <tbody class="user-timezone-table">
+                        {% timezone 'America/Mexico_City' %}
+                        {% for schedule in conversation_club_info.schedules_list.all %}
+                            <tr class="convert-to-tz">
+                                <td id="day-display" data-day="{{ schedule.day }}" ></td>
+                                <td id="hour-display" class="text-center" data-hour="{{ schedule.hour|date:'H:i' }}"></td>
+                            </tr>
+                        {% endfor %}
+                        {% endtimezone %}
+                        </tbody>
+                    </table>
+                    <p class="text-center user-timezone"></p>
+                </div>
+            </div>
+            {% if testimonials %}
+                {% include 'conversation_club/testimonials.html' %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

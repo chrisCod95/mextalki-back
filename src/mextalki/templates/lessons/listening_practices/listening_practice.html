@@ -1,0 +1,18 @@
+{% if lesson.listening_practice %}
+<div class="container my-2 my-md-3">
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+            <h5 class="card-title">Listening Practice</h5>
+            <div class="dropdown-divider"></div>
+            <div class="mt-4">
+                {% autoescape off %}
+                    {{ lesson.listening_practice.description }}
+                {% endautoescape %}
+            </div>
+            {% include 'lessons/listening_practices/buttons.html' %}
+            <div class="dropdown-divider"></div>
+            {% include 'lessons/listening_practices/audios.html' %}
+        </div>
+    </div>
+</div>
+{% endif %}

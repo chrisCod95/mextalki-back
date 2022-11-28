@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}{{ object.title }}{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}{{ object.title }}{% endblock %}
+{% block og_image %}{{ object.thumbnail_url }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/ableplayer/ableplayer.min.css' %}">
+    <style>
+        body {
+            background-color: var(--background);
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/test.css' %}">
+    <link rel="stylesheet" href="{% static 'css/podcast/podcast_detail.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/js-cookie/js.cookiev2.0.4.js' %}"></script>
+    <script src="{% static 'js/ableplayer/ableplayer.min.js' %}"></script>
+
+    {% if user.is_authenticated %}
+        <script>
+        const redeem_points_url = '{% url 'redeem_points_to_video_score' user_uid_b64=user.uid podcast_id=object.pk %}';
+        </script>
+        <script src="{% static 'js/podcast_points.js' %}"></script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="bg-dark text-light text-center">{{ object.title }}</h1>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="player">
+                            <video data-able-player data-skin="2020" id="video1" preload="auto" data-youtube-id="{{ object.youtube_video_id }}" data-transcript-div="transcript" data-use-chapters-button="false" data-include-transcript="false" playsinline>
+                                {% if object.captions and user.has_active_subscription %}
+                                    <track kind="captions" src="{{ object.captions.url }}"/>
+                                {% endif %}
+                            </video>
+                            {% include 'podcast/video_score.html' %}
+                        </div>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <p class="d-inline font-weight-bold">Glossary:</p>
+                        {% for tag in object.tags.all %}
+                            <a href="{% url 'podcast' %}?tag={{ tag.slug }}" class="badge badge-primary">{{ tag|capfirst }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="d-none d-md-block col-md-6">
+                <div class="row">
+                    <div id="transcript" class="mt-3"></div>
+                </div>
+                {% if user.has_active_subscription %}
+                        <div class="row button-row mt-5">
+                            {% if object.transcript %}
+                            <div class="col-6">
+                                <a class="btn btn-primary" href="{{ object.transcript.url }}" download>Download the transcript</a>
+                            </div>
+                            {% endif %}
+                            {% if object.mp3_file %}
+                            <div class="col-6">
+                                <a class="btn btn-primary" href="{{ object.mp3_file.url }}" download>Download the mp3</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                {% else %}
+                    <div class="alert alert-warning mx-4 px-5">
+                        Only members have access to the transcript and test of this podcast.
+                        <a href="{% url 'subscription' %}">Become a member now.</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="row mt-5">
+                <div class="col-12 col-md-6 mt-3">
+                    {% autoescape off %}
+                        {{ object.blog_content }}
+                    {% endautoescape %}
+                </div>
+                {% if user.has_active_subscription %}
+                    <div class="col-12 col-md-6">
+                        {% include 'podcast/podcast_test/test.html' %}
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="row mt-5">
+                <div class="alert alert-warning mx-4 ">
+                    Only registered users have access to the glossary. <a href="{% url 'login' %}">Login</a> or
+                    <a href="{% url 'sign_up' %}">sign up</a> now.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

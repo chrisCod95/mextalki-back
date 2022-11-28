@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Mextalki | Leadership Board{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Leadership Board{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/leadership_board_view/podium.css' %}">
+<link rel="stylesheet" href="{% static 'css/leadership_board_view/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container leadership-board">
+    <div class="row">
+        <div class="col-12 text-center mt-4">
+            <h1>Mextalki Leaders - {{ leadership_board_month }}</h1>
+        </div>
+    </div>
+
+    <div class="row m-3">
+        <div class="col-md-6">
+            {% include 'leadership_board_view/podium.html' %}
+        </div>
+        <div class="col-md-6 mt-3">
+            <div class="row rewards d-flex justify-content-center">
+                <h3 class="mt-4 text-center">{{ leaderboard_rewards.title }}</h3>
+                {% autoescape off %}
+                    {{ leaderboard_rewards.how_get_points }}
+                {% endautoescape %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container table-body my-3">
+        <div class="accordion" id="faqAccordion">
+            {% for leader in leaders %}
+                {% include 'leadership_board_view/user_card.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/home_faq.js' %}"></script>
+{% endblock %}

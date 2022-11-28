@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Subscription confirmation{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Subscription confirmation{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">Hello {{user.username}}</h1>
+            <p class="lead">Thanks for being part of the mextalki family!</p>
+            <p class="lead mt-5">
+                Your current membership:
+                <span class="badge badge-primary">{{ user.last_subscription.subscription_type.title }}</span>
+            </p>
+            <p class="lead text-lowercase">
+                Price per: {{ user.last_subscription.subscription_type.billing_cycle }}
+                <span>${{ user.last_subscription.subscription_type.final_price|stringformat:".2f" }}{{ user.last_subscription.subscription_type.currency }}</span>
+            </p>
+            <p class="lead">
+                Your due date:
+                <span>{% if user.last_subscription.next_billing_time %}{{ user.last_subscription.next_billing_time|date:"d/m/Y" }}{% else %}-{% endif %}</span>
+            </p>
+            <p class="lead mt-3">
+                You don’t need to pay manually, it is automatically until cancelled.
+            </p>
+        </div>
+    </div>
+    <h1>Now what?</h1>
+    <ol>
+        <li>
+            <a href="{% url 'conversation_club' %}">Click here</a> to know how to schedule your seats in the
+            conversation club.
+        </li>
+        {% if user.last_subscription.subscription_type != 'CONVO CLUB' %}
+        <li>
+            <a href="{% url 'course_detail' slug='the-learn-spanish-from-scratch-course' %}">Explore the courses</a>
+        </li>
+        {% endif %}
+        <li>
+            <a href="{% url 'lessons' %}">Click here</a> to know how to schedule your lessons/conversation practice.
+        </li>
+    </ol>
+</div>
+{% endblock %}

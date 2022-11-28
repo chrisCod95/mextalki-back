@@ -1,0 +1,22 @@
+<div class="container-fluid {% if request.resolver_match.view_name == 'index' %} bg-dark text-white {%endif%}">
+    <footer class="container p-4">
+        <hr class="my-2">
+        <div  class="row">
+            <div class="col-auto mr-auto">
+                <i class="fas fa-copyright">
+                </i> 2016-2021 Mextalki v{{ version }}
+            </div>
+            <div class="col-auto">
+                <span class="ml-auto">
+                    <a class="{% if request.resolver_match.view_name == 'index' %} text-white {% else %} text-dark {% endif %}" href="{% url 'privacy_policy' %}">
+                        Privacy
+                    </a>
+                    <a class="{% if request.resolver_match.view_name == 'index' %} text-white {% else %} text-dark {% endif %}" href="{% url 'terms_of_use' %}">
+                        Terms
+                    </a>
+                </span>
+            </div>
+        </div>
+
+    </footer>
+</div>   

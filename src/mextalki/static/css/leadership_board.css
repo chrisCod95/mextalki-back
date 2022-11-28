@@ -1,0 +1,134 @@
+.board-tab {
+    position: fixed;
+    top: 12rem;
+    left: -75px;
+    transition: 0.5s;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    z-index: 999;
+}
+
+.board-tab:hover {
+    cursor: pointer;
+}
+
+.board-tab .tab-paragraph {
+    padding: 10px 50px 8px 10px;
+    font-weight: 555;
+}
+
+.board-tab i {
+    font-size: 25px;
+    transform: rotate(90deg);
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.leadership-board {
+    position: fixed;
+    top: 110px;
+    left: -30rem;
+    width: 370px;
+    transition: 0.5s;
+    z-index: 1000;
+    box-shadow: 3px 3px 3px grey;
+    border-radius: 0 0 5% 5%;
+}
+
+.leadership-board .table-head {
+    text-align: center;
+    height: 3rem;
+}
+
+.leadership-board .table-head .close {
+    color: white;
+    font-size: 25px;
+}
+
+.leadership-board .podium {
+    place-items: center;
+    text-align: center;
+    padding-top: 1rem;
+    margin: 1rem 1rem 1rem 1rem;
+    padding-bottom: 1rem;
+    background: linear-gradient(#FFF564, #58D6E6);
+    border-radius: 5%;
+}
+
+.leadership-board .podium img {
+    width: 100%;
+    height: auto;
+}
+
+.leadership-board .podium .podium-place-1 {
+    border: solid 3px #ff8000;
+    width: 85px;
+    height: 85px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.leadership-board .podium .trophy-1 {
+    color: goldenrod;
+    font-size: 40px;
+    margin-top: 10px;
+}
+
+.leadership-board .podium .podium-place-2 {
+    border: solid 3px #3DA95B;
+    width: 65px;
+    height: 65px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.leadership-board .podium .trophy-2 {
+    color: #afafaf;
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+.leadership-board .podium .podium-place-3 {
+    border: solid 3px #40B6E2;
+    width: 65px;
+    height: 65px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.leadership-board .podium .trophy-3 {
+    color: #a17912;
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+.leadership-board .table-body .user-mask {
+    max-width: 20px;
+}
+
+.leadership-board .table-body .user-card {
+    background-color: #b4b4b4;
+}
+
+.leadership-board .table-body .place-1 {
+    background-color: #ff8000;
+}
+
+.leadership-board .table-body .place-2 {
+    background-color: #3DA95B;
+}
+
+.leadership-board .table-body .place-3 {
+    background-color: #40B6E2;
+}
+
+@media only screen and (max-width: 700px) {
+    .leadership-board .table-body {
+        height: 220px !important;
+        overflow: scroll;
+    }
+}

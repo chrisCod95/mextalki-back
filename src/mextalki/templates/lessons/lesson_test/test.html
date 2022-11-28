@@ -1,0 +1,9 @@
+{% if test %}
+    <div class="container my-2 my-md-3">
+        {% if not score.full_well_answered %}
+            {% include 'lessons/lesson_test/form.html' %}
+        {% else %}
+            {% include 'lessons/lesson_test/full_well_answered.html' %}
+        {% endif %}
+    </div>
+{% endif %}

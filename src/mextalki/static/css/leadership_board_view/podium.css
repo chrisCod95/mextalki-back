@@ -1,0 +1,50 @@
+.leadership-board .podium {
+    padding: 10px 0 10px 0;
+    margin-bottom: 1rem;
+    margin-left: 6rem;
+    background: linear-gradient(#FFF564, #58D6E6);
+    border-radius: 5px;
+    width: 65%;
+    box-shadow: 1px 1px 1px 1px grey;
+    font-weight: bold;
+}
+
+.leadership-board .podium img {
+    width: 55px;
+    height: auto;
+}
+
+.leadership-board .podium .profile-pic {
+    height: 55px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.leadership-board .podium .trophy {
+    font-size: 30px;
+}
+
+.leadership-board .podium .trophy-1 {
+    color: goldenrod;
+}
+
+.leadership-board .podium .trophy-2 {
+    color: #afafaf;
+}
+
+.leadership-board .podium .trophy-3 {
+    color: #a17912;
+}
+
+@media only screen and (max-width: 950px) {
+    .leadership-board .podium {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .leadership-board .podium img {
+        max-width: 45px;
+        height: auto;
+    }
+}

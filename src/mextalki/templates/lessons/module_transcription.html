@@ -1,0 +1,31 @@
+<div class="text-center">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".transcriptionCollapse"
+            aria-expanded="false" aria-controls="audioCollapse">Show Transcript
+    </button>
+</div>
+<div class="row my-2 my-md-4">
+    <div class="col-md-6">
+        <div class="collapse transcriptionCollapse">
+            <div class="card bg-dark text-white">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Spanish</h4>
+                    {% autoescape off %}
+                        {{ lesson.module_info.spanish_transcription }}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="collapse transcriptionCollapse">
+            <div class="card bg-dark text-white">
+                <div class="card-body">
+                    <h4 class="card-title text-center">English</h4>
+                    {% autoescape off %}
+                        {{ lesson.module_info.english_transcription }}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

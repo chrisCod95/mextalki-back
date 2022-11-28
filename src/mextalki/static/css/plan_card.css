@@ -1,0 +1,59 @@
+.billing-cycle-options {
+    font-family: "Lato",sans-serif;
+}
+.billing-cycle-options .save-message {
+    color: #256BFF;
+    font-size: 0.875rem;
+}
+.plan-card {
+    width: 100%;
+    background-color: #f8f8f8;
+    border-radius: 25px;
+    border-width: 0;
+    color: #0B3558;
+    font-family: "Lato",sans-serif;
+    overflow: hidden;
+}
+
+.plan-card .best-deal {
+    color: #256BFF;
+    border-bottom: 2px solid #256BFF;
+    font-weight: bold;
+}
+.plan-card .card-title {
+    font-family: "Lato",sans-serif;
+    font-weight: bold;
+    font-size: 1.375rem;
+}
+.plan-card .price-section .override-price {
+    text-decoration:line-through;
+    font-size: 0.875rem;
+}
+.plan-card .price-section .price {
+    font-family: "Lato",sans-serif;
+    font-weight: bold;
+    font-size: 1.563rem;
+}
+.plan-card .price-section .billing-cycle {
+    text-transform: lowercase;
+    font-weight: bold;
+}
+.payment-buttons .stripe-button {
+    height: 2.188rem;
+}
+
+ .ribbon {
+  width: 160px;
+  height: 32px;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0px 2px 3px rgba(136, 136, 136, 0.25);
+  background: #256BFF;
+  transform: rotate(45deg);
+  position: absolute;
+  right: -42px;
+  top: 20px;
+  padding-top: 7px;
+}

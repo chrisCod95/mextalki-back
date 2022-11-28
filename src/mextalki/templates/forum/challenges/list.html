@@ -1,0 +1,21 @@
+<div class="card mb-3">
+    <h5 class="card-title text-center pt-2"><i class="fas fa-rocket"></i> Challenges</h5>
+</div>
+{% for challenge in challenges %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <h5 class="card-title">{{ challenge.title }}</h5>
+            <p class="card-text">
+                {% autoescape off %}
+                {{ challenge.content|truncatechars:200 }}
+                {% endautoescape %}
+            </p>
+            <a href="{% url 'challenge_detail' slug=challenge.slug %}" class="card-link">See more</a>
+        </div>
+        <div class="card-footer text-muted">
+            {{ challenge.created_at|timesince }} ago
+        </div>
+    </div>
+{% endfor %}
+
+

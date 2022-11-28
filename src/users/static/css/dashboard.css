@@ -1,0 +1,31 @@
+.user-mask-name {
+    position: relative;
+}
+
+.user-mask-name .mask-more-info {
+    position: absolute;
+    top: 7px;
+    right: -25px;
+    font-size: 17px;
+    color: gray;
+}
+
+.user-mask-name .mask-more-info:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.progress-bar {
+    position: relative;
+    background: linear-gradient(90deg, yellow, orange, orangered, red);
+}
+
+.progress .fire-icon {
+    max-width: 21px;
+    position: absolute;
+    left: 18.2rem;
+    top: -6px;
+}
+.referral-link {
+    font-size: 0.8rem;
+}

@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="card bg-dark text-white">
+        <div class="card-body">
+            <h5 class="card-title">{{ lesson.speaking_practice.section_title }}</h5>
+             <div class="dropdown-divider"></div>
+                {% include 'lessons/speaking_practices/buttons.html' %}
+                {% include 'lessons/speaking_practices/exercises.html' %}
+                {% include 'lessons/speaking_practices/audios.html' %}
+            <div class="mt-4">
+                {% autoescape off %}
+                    {{ lesson.speaking_practice.description }}
+                {% endautoescape %}
+            </div>
+            {% if lesson.speaking_practice.bottom_message %}
+                <div class="dropdown-divider"></div>
+                <div class="mt-2">
+                    <p class="font-weight-light">
+                        {% autoescape off %}
+                            {{ lesson.speaking_practice.bottom_message }}
+                        {% endautoescape %}
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

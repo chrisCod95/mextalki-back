@@ -1,0 +1,39 @@
+{% load get_lesson_exp_points %}
+
+<div class="card mt-2 mt-md-3">
+    <div class="card-header font-weight-bold">
+        {{ module.title }}
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for lesson in module.get_lessons %}
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-8">
+                        {% if lesson.type == 'LESSON' %}
+                            <i class="far fa-check-square {% if lesson|get_lesson_exp_points:request.user != None %} l-completed {% else %} l-no-completed {% endif %}"
+                            ></i>
+                            <span>{{ lesson.link_title }}</span>
+                        {% else %}
+                            <i class="fas fa-pencil-alt"></i>
+                            <span>{{ lesson.link_title }} {{ module.title }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            {% if lesson|get_lesson_exp_points:request.user != None %}
+                            <div class="col-8">
+                                <div class="alert m-0 score-alert py-0 h-100 d-flex align-items-center justify-content-center {%if lesson|get_lesson_exp_points:request.user == 10%}alert-success{%else%}alert-dark{%endif%}" role="alert">
+                                    <span>{{ lesson|get_lesson_exp_points:request.user|floatformat:0 }} Exp. points</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="{% if lesson|get_lesson_exp_points:request.user != None %}col-4{% else %}col-12{% endif %} text-right">
+                                <a href="{% url 'lesson_detail' course=object.slug lesson=lesson.slug %}" class="btn btn-primary">Start</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

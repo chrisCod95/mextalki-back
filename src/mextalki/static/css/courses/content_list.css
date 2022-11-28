@@ -1,0 +1,11 @@
+.score-alert {
+    max-height: 2.375rem;
+}
+
+.l-completed {
+    color: green;
+}
+
+.l-no-completed {
+    color: darkgrey;
+}

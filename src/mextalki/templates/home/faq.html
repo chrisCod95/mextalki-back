@@ -1,0 +1,33 @@
+<div class="container mt-5 mb-3">
+    <h1>{{ faq.title }}</h1>
+    <div class="accordion" id="faqAccordion">
+        {% for question in faq.questions.all %}
+            <div class="card faq-card">
+                <div class="card-header faq-question-header" id="headingOne">
+                    <span class="mb-0">
+                        <button
+                            class="btn btn-block text-left d-flex justify-content-between font-weight-bolder"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapse{{ forloop.counter }}"
+                            aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                            {{ question.question }}
+                            <i class="fas {% if forloop.first %}fa-chevron-up{% else %}fa-chevron-down{% endif %} mr-2" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                </div>
+                <div
+                    id="collapse{{ forloop.counter }}"
+                    class="collapse {% if forloop.first %}show{% endif %}"
+                    aria-labelledby="heading{{ forloop.counter }}"
+                    data-parent="#faqAccordion">
+                    <div class="card-body">
+                        {% autoescape off %}
+                            {{ question.answer }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Subscription{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Subscription{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/plan_card.css' %}">
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/billing_cycle_toggle.js' %}"></script>
+<script>
+let monthlyPriceContainers = $('small.monthly-price');
+monthlyPriceContainers.each(function () {
+    let sixMonthsPrice = $(this).data('final-price');
+    let currency = $(this).data('currency');
+    let monthlyPrice = (sixMonthsPrice / 6).toFixed(2);
+    $(this).text(`$${monthlyPrice} ${currency} per Month`)
+})
+</script>
+{% if user.is_authenticated  %}
+<script type="text/javascript">
+    let stripe_checkout_url = '{% url 'stripe_create_subscription_checkout_session' %}';
+    let stripe_public_key = '{{ stripe_public_key }}';
+</script>
+<script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&vault=true&intent=subscription"></script>
+<script type="text/javascript" src="{% static 'js/js-cookie/js.cookie.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/paypal/paypal_subscription_payment.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/stripe/subscription_stripe_checkout.js' %}"></script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container mt-md-1">
+                <h1 class="text-center mb-1 mt-2">Get your membership now</h1>
+                {% include 'subscription/billing_cicle_options.html' %}
+                <div class="row justify-content-center d-none" id="monthly-options">
+                    {% for subscription_type in monthly_subscription_types %}
+                        <div class="col-12 col-md-6 col-lg-4 d-flex">
+                            {% include 'subscription/plan_card.html' %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row justify-content-center" id="half-year-options">
+                    {% for subscription_type in biannually_subscription_types %}
+                        <div class="col-12  col-md-6 col-lg-4 d-flex">
+                            {% include 'subscription/plan_card.html' %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if not user.is_authenticated %}
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-12 d-flex justify-content-center">
+                            <div class="alert alert-info text-center mt-1 mb-3">
+                                <small>
+                                    Wanna know what membership fits you the better?<br>
+                                    Do the test and mesure your spanish level and your membership best option
+                                </small>
+                                <br>
+                                <br>
+                                <a class="btn btn-primary btn-sm" href="{% url 'subscription_test' %}">Do the test</a>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <a class="sign_up btn btn-info btn-block w-25 text-white" href="{% url 'sign_up' %}">Sign up</a>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <p class="mt-3 mb-0 login">Do you have already an account? <a href="{% url 'login' %}?next={% url 'subscription' %}">Login</a>.</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

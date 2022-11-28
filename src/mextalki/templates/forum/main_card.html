@@ -1,0 +1,44 @@
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a
+                    class="nav-link {% if main_context == 'CHAT' %} active {% endif %}"
+                    href="{% url 'context_forum_home' main_context='chat' %}"
+                >Chat</a>
+            </li>
+            <li class="nav-item">
+                <a
+                class="nav-link {% if main_context == 'ANNOUNCEMENTS' %} active {% endif %}"
+                href="{% url 'context_forum_home' main_context='announcements' %}"
+                >Announcements</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="card-group row">
+            {% if main_context == 'ANNOUNCEMENTS' %}
+                {% include 'forum/announcements/list.html' %}
+            {% elif main_context == 'CHAT' %}
+                {% include 'forum/chat/list.html' %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+    <style>
+        .post-thumbnail {
+            width: 100%;
+        }
+        @media only screen and (min-width: 768px) {
+            .card-img-wrapper {
+                overflow: hidden;
+            }
+            .post-thumbnail {
+                width: 280px;
+                height: 180px;
+            }
+        }
+    </style>
+{% endblock %}

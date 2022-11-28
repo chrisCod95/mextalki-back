@@ -1,0 +1,32 @@
+{% load humanize %}
+{% load fullurl %}
+<div class="card user-card text-center mb-4">
+    <div class="card-body text-center">
+        <div class="image-wrapper">
+            <img class="user-card-pic" src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{{ user.mask }}{% endif %}" width="100" alt="mask">
+        </div>
+        <h5 class="card-title font-weight-bold">{{ user.username }}</h5>
+        <small class="card-text">{{ user.full_name }}</small>
+    </div>
+    <ul class="list-group list-group-flush">
+        <nav class="navbar navbar-dark bg-dark text-light">
+            <span class="navbar-brand">Referrals</span>
+            <button
+                id="cp-to-clipboard"
+                class="btn btn-outline-primary"
+                data-clipboard-text="{% fullurl 'referral_by_user_name' username=user.slug %}">Copy link</button>
+        </nav>
+        <li class="list-group-item bg-secondary text-light">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="badge badge-info">{{ user.referral_credits }} credits</span><br>
+                    <i class="fas fa-coins mr-2" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-6">
+                    <span class="badge badge-info">{{ user.referred_users }} users</span><br>
+                    <i class="fas fa-user-friends mr-2" aria-hidden="true"></i>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

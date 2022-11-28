@@ -1,0 +1,7 @@
+{% load user_can_schedule %}
+<button
+    type="button"
+    class="btn btn-primary btn-block mt-1 {% if event_type|user_can_schedule:request.user %}schedule_button{% else %}disabled user-cant-schedule{% endif %}"
+    {% if event_type|user_can_schedule:request.user %}data-schedule-url="{% url 'schedule_lesson' user_uid_b64=user.uid  event_type_uid_b64=event_type.uid %}"{% endif %}
+    {% if event_type|user_can_schedule:request.user %}data-calendar-url="{{ event_type.calendar_url }}"{% endif %}>{{ event_type.title }}
+</button>

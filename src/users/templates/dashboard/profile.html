@@ -1,0 +1,41 @@
+<div class="card mb-3">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand">Profile</span>
+        <a class="btn btn-outline-primary" href="{% url 'edit_profile' %}" tabindex="-1" aria-disabled="true">Edit</a>
+    </nav>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Full Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{ user.full_name }}</div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                {{ user.email }}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Birthday</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                {{ user.birth_day|date:"D d M Y" }}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Location</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                {{ user.location }}
+            </div>
+        </div>
+    </div>
+</div>

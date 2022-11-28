@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load get_podcast_video_score %}
+
+{% block title %}{{ seo_title_prefix }}Podcast{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Podcast{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/podcast/podcasts_list.css' %}">
+    <style>
+        body {
+            background-color: var(--background);
+        }
+        .fa-check-circle {
+            position: absolute;
+            color: #1e7e34;
+            font-size: 90px;
+            left: 130px;
+            top: 60px;
+            opacity: 0.6;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12">
+                <p class="d-inline font-weight-bold">Glossary:</p>
+                {% include 'podcast/tags.html' %}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            {% for podcast in page_obj %}
+                <div class="col-12 col-md-4 my-2">
+                    <div class="video-wrapper mt-3">
+                        <a class="d-block" href="{% url 'podcast_detail' slug=podcast.slug %}">
+                            <div class="video-thumbnail">
+                                <img src="{{ podcast.thumbnail_url }}" class="img-fluid thumbnail"
+                                     alt="{{ podcast.title }}"/>
+                            </div>
+                            <div class="video-description">
+                                <p class="title text-light">{{ podcast.title }}</p>
+                                {% if podcast|get_podcast_video_score:request.user %}
+                                    <i class="far fa-check-circle"></i>
+                                {% endif %}
+                                <p class="description text-light text-justify">
+                                    {{ podcast.description }}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% if page_obj.paginator.num_pages > 1 %}
+            <nav>
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                        {% if page_obj.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="#">{{ i }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+{% endblock %}

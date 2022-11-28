@@ -1,0 +1,9 @@
+<div class="card mb-3">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand">Bio</span>
+        <a class="btn btn-outline-primary" href="{% url 'edit_profile' %}" tabindex="-1" aria-disabled="true">Edit</a>
+    </nav>
+    <div class="card-body">
+        <p class="text-left">{{ user.bio }}</p>
+    </div>
+</div>

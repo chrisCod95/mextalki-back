@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Conversation Club{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Conversation Club{% endblock %}
+
+{% block extra_css %}
+    <style>
+        body {
+            background-color: var(--background);
+        }
+    </style>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript">
+    let username = '{{ user.full_name }}';
+    let user_email = '{{ user.email }}';
+    let event_url = '{% url 'schedule_lesson' user_uid_b64=user.uid  event_type_uid_b64=event_type.uid %}';
+    let calendarUrl = '{{ event_type.calendar_url }}';
+    let redirectUrl = "{% url 'conversation_club' %}";
+</script>
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+<script type="text/javascript" src="{% static 'js/js-cookie/js.cookie.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/schedule_event.js' %}"></script>
+<script type="text/javascript">
+    Calendly.initInlineWidget({
+        url: calendarUrl,
+        parentElement: document.getElementById('calendly-inline-widget'),
+        prefill: {
+            name: username,
+            email: user_email,
+        }
+    });
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="alert alert-info" role="alert">
+        You still have <span class="badge badge-dark">{{ user_available_slots }}</span> seats available.
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container mt-2 mt-md-4">
+                <h1 class="text-center mb-4">Conversation Club</h1>
+                {% autoescape off %}
+                {{ event_type.description }}
+                {% endautoescape %}
+                {% if event_type %}
+                <div id="calendly-inline-widget" data-auto-load="false" data-url="{{ event_type.calendar_url }}"
+                     style="min-width:320px;height:630px;"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

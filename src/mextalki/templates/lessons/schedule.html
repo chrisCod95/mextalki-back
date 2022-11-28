@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Schedule Lesson{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Schedule Lesson{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+    <link rel="stylesheet" href="{% static 'css/ekko-lightbox/ekko-lightbox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lessons/teachers_reviews.css' %}">
+    <style>
+        body {
+            background-color: var(--background);
+        }
+    </style>
+    <style>
+    .alert-secondary{
+        position: fixed;
+        left: -37rem;
+        top: 11rem;
+        z-index: 999;
+        font-size: 12px;
+        transition: 0.5s;
+        width: 25%;
+    }
+    .alert-secondary i {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+    }
+    .alert-secondary i:hover {
+        cursor: pointer;
+    }
+    @media only screen and (max-width: 700px) {
+        .alert-secondary{
+            left: -37rem;
+            top: 12rem;
+            width: auto;
+        }
+    }
+    </style>
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript">
+        let username = '{{ user.full_name }}';
+        let user_email = '{{ user.email }}';
+        let event_url = null;
+        let redirectUrl = "{% url 'lessons' %}";
+        $(".user-cant-schedule").click(function (e) {
+            $(".alert-secondary").css("left", "1rem");
+        });
+        $(".close-cant-schedule").click(function (e) {
+            $(".alert-secondary").css("left", "-37rem")
+        });
+    </script>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+    <script type="text/javascript" src="{% static 'js/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/js-cookie/js.cookie.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/schedule_event.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lessons/remaining_available_time_alert.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'lessons/remaining_time_alert.html' %}
+                <div class="alert alert-secondary">
+                    <i class="fas fa-times close-cant-schedule"></i>
+                    You don't have enough available lesson time to schedule this lesson &#128542;.
+                    <br>
+                    Don't interrupt your spanish learning:
+                    <strong><a href="{% url 'buy_extra_hours' event_type='lesson' %}">get more lesson time</a></strong> or
+                    <strong><a href="{% url 'buy_extra_hours' event_type='practice' %}">get more practice time.</a></strong>
+                </div>
+                <div class="container mt-2 mt-md-4">
+                    <h1 class="text-center mb-4">Our Teachers</h1>
+                    <p>Professionals focused on conversational lessons; each lesson is catered to your needs.
+                        Knowledgeable and eager to make you discover the subtle and fine points of Mexican Spanish.</p>
+                    <p>We offer two types of lessons:</p>
+                    <ol>
+                        <li>Professional lessons: each teacher prepares a lesson based on your individual needs. Whether
+                            you want to improve a specific skill (listening, reading, speaking, writing) or want to
+                            start learning with a guide, we’ve got your back!
+                            <a 
+                                {% if user.is_authenticated %}
+                                href="{% url 'buy_extra_hours' event_type='lesson' %}"
+                                {% else %}
+                                href="{% url 'login' %}"
+                                {% endif %}
+                            >
+                                Get Your Private Lesson
+                            </a>
+                        </li>
+                        <li class="mt-2">Conversation Practice: maybe you want to put in practice your speakng skills in an
+                            individual way and with a highly capable teacher who can foster the conversation and correct
+                            your mistakes, then choose this option.
+                            <a
+                                {% if user.is_authenticated %}
+                                href="{% url 'buy_extra_hours' event_type='practice' %}"
+                                {% else %}
+                                href="{% url 'login' %}"
+                                {% endif %}
+                            >
+                                Get Some Practice
+                            </a>
+                        </li>
+                    </ol>
+                    <div class="row justify-content-center">
+                        {% for teacher in teachers %}
+                            <div class="col-12 col-md-4 my-2">
+                                {% include 'lessons/teacher_card.html' %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+.copy-section {
+    padding-top: 8em;
+    font-family: 'Montserrat' !important;
+    margin-bottom: 5em;
+}
+
+.copy-section h2 {
+    font-family: 'Montserrat' !important;
+    font-weight: bold;
+}
+
+.copy-section h4 {
+    margin-bottom: 1.5em;
+    font-family: 'Montserrat' !important;
+}
+
+.copy-section i {
+    font-size: 28px;
+    margin-top: 10%;
+    margin-right: 2%;
+    color: #000;
+}
+
+.copy-section p {
+    text-align: justify;
+}
+
+
+#section-img {
+    width: auto !important;
+    max-width: 100% !important;
+}
+
+.mextalki-info {
+    padding-top: 5em !important;
+}
+
+.mextalki-info h1 {
+    font-size: 80px;
+}
+
+.users-counter h1 {
+    font-size: 150px;
+    margin-top: -0.5em;
+}
+
+@media only screen and (max-width: 767px) {
+    #section-img {
+        margin-top: 2em;
+    }
+    .copy-section {
+        padding-top: 1em;
+    }
+}

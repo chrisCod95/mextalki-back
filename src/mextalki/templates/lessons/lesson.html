@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}{{ lesson.title }}{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}{{ lesson.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/test.css' %}">
+<link rel="stylesheet" href="{% static 'css/lessons/activity.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="background-color: {{ lesson.color }};">
+    {% include 'lessons/header.html' %}
+</div>
+<div class="container mt-4">
+    {% if lesson.content_description %}<p>{{ lesson.content_description }}</p>{% endif %}
+    <div class="row">
+        <div class="col-md-6">
+            {% include 'lessons/videos.html' %}
+            {% include 'lessons/lesson_test/test.html' %}
+            {% if lesson.activity %}
+                {% include 'lessons/activity/activity_card.html' %}
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            {% include 'lessons/speaking_practices/speaking_practice.html' %}
+            {% include 'lessons/listening_practices/listening_practice.html' %}
+            {% include 'lessons/useful_spanish/useful_spanish.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

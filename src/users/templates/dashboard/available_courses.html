@@ -1,0 +1,18 @@
+{% if not user.has_active_subscription %}
+    <div class="card mb-3">
+        <nav class="navbar navbar-light bg-light">
+            <span class="navbar-brand">Available Courses</span>
+        </nav>
+        <div class="card-body px-0 py-1">
+            <ul class="list-group list-group-flush">
+                {% for course in courses %}
+                    {% if course not in user.courses %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <a href="{% url 'course_detail' slug=course.slug %}">{{ course.title }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

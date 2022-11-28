@@ -1,0 +1,42 @@
+<style>
+    #content-{{ forloop.counter }} a:hover, #content-{{ forloop.counter }} button:hover {
+        background-color: {{ plan_item.color }};
+        color: #FFFFFF !important;
+    }
+    #content-{{ forloop.counter }} .generic_feature_list ul li:hover {
+        border-left:5px solid {{ plan_item.color }} !important;
+    }
+</style>
+<div class="generic_content" id="content-{{ forloop.counter }}">
+    <div class="generic_head_price">
+        <div class="generic_head_content">
+            <div class="py-3 title" style="background-color: {{ plan_item.color|default:"#251182" }};">
+                <span class="text-white"><b>{{ plan_item.plan.title }}</b></span>
+            </div>
+        </div>
+        <div class="generic_price_tag">
+            <div class="price">
+                <span class="sign">$</span>
+                <span class="currency">{{ plan_item.plan.price }}</span>
+                <span class="month">{{ plan_item.plan.currency }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="generic_feature_list">
+        {% autoescape off %}
+            {{ plan_item.plan.description }}
+        {% endautoescape %}
+    </div>
+    <div class="my-2">
+        {% if user.is_authenticated %}
+            <div
+             class="paypal-payment-button container"
+             data-price="{{ plan_item.plan.price }}"
+             data-currency="{{ plan_item.plan.currency }}"
+             data-payment-url="{% url 'process_paypal_plan_payment' user_uid_b64=user.uid plan_uid_b64=plan_item.plan.uid %}">
+            </div>
+        {% else %}
+            <a class="sign_up" style="border: 1px solid {{ plan_item.color }}; color: {{ plan_item.color }};" href="{% url 'sign_up' %}">Sign up</a>
+        {% endif %}
+    </div>
+</div>

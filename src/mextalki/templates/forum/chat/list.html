@@ -1,0 +1,77 @@
+{% load has_active_chat %}
+{% block extra_css %}
+    <style>
+        .teacher-chat a {
+            color: #6b6b6b;
+        }
+        .teacher-chat a:hover {
+            color: #2c2c2c;
+            text-decoration: none;
+        }
+        .chat_img {
+          float: left;
+          width: 8%;
+        }
+        .chat_img img {
+            max-width: 100%;
+            clip-path: circle();
+        }
+    </style>
+{% endblock %}
+
+<div class="col-12">
+    <ul class="list-group chats-list">
+        {% for chat in main_queryset %}
+            <li class="list-group-item teacher-chat">
+                {% for user in chat.users.all %}
+                    {% if user != request.user %}
+                        <a class="d-flex align-items-center" href="{% url 'chat_detail' user_uid_b64=user.uid %}">
+                            <div class="chat_img">
+                                {% if user.profile_picture %}
+                                    <img src="{{ user.profile_picture.url }}" alt="">
+                                {% else %}
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="ml-3">
+                                <span class="font-weight-bold">{{ user.username }}</span>
+                                {% if chat.last_message.user.uid != request.user.uid and chat.unread_messages %}
+                                    <small class="badge badge-danger">{{ chat.unread_messages }}</small>
+                                {% endif %}
+                                <br><small class="last-message">
+                                    {% if chat.last_message.user.uid == request.user.uid %}You: {% endif %}
+                                    {{ chat.last_message.content|truncatechars:200 }}
+                                </small>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </li>
+        {% endfor %}
+        {% for user in teachers_to_chat %}
+            {% if not user.uid|has_active_chat:request.user %}
+                <li class="list-group-item teacher-chat">
+                    <a class="d-flex align-items-center" href="{% url 'chat_detail' user_uid_b64=user.uid %}">
+                        <div class="chat_img">
+                            {% if user.profile_picture %}
+                                <img src="{{ user.profile_picture.url }}" alt="">
+                            {% else %}
+                                <img src="https://ptetutorials.com/images/user-profile.png" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="ml-3">
+                            <span class="font-weight-bold">{{ user.username }}</span>
+                            {% if chat.last_message.user.uid != request.user.uid and chat.unread_messages %}
+                                <small class="badge badge-danger">{{ chat.unread_messages }}</small>
+                            {% endif %}
+                            <br><small class="last-message">
+                                {% if chat.last_message.user.uid == request.user.uid %}You: {% endif %}
+                                {{ chat.last_message.content|truncatechars:200 }}
+                            </small>
+                        </div>
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}{{ lesson.title }}{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}{{ lesson.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/test.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="background-color: {{ lesson.color }};">
+        {% include 'lessons/header.html' %}
+    </div>
+    <div class="container my-4">
+        {% if lesson.content_description %}<p>{{ lesson.content_description }}</p>{% endif %}
+        {% include 'lessons/module_video.html' %}
+        {% if lesson.module_info.spanish_transcription and lesson.module_info.english_transcription %}
+            {% include 'lessons/module_transcription.html' %}
+        {% endif %}
+        <div class="row mt-4">
+            {% include 'lessons/lesson_test/test.html' %}
+        </div>
+    </div>
+{% endblock %}

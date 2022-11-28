@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div class="card mt-4">
+        {% if object.image %}
+            <img src="{{ object.image.url }}" alt="post image">
+        {% endif %}
+        <div class="card-body">
+            <div class="row d-flex justify-content-between">
+                <div class="col-md-6"> 
+                    <img class="testimonial-thumbnail"
+                         src="{% static 'mextalki_post_logo.jpeg' %}" alt="user picture" width="40">
+                    <small>Mextalki Admin - <span class="text-muted mb-4">{{ object.created_at }}</span></small>
+                </div>
+            </div>
+            <span class="font-weight-bold">{{ object.title }}</span>
+            <br>
+            <hr>
+            {% autoescape off %}
+                {{ object.content }}
+            {% endautoescape %}
+            <div class="mt-3">
+                <form action="{% url 'like_post_request' user_uid_b64=user.uid post_id=object.post.pk %}" class="like-form"  method="POST">
+                    {% csrf_token %}
+                    {% if object.post.likes_count %}
+                        <span class="badge badge-info ml-1 likes-count">
+                            {% if user_already_liked_post %}
+                                You and
+                            {% endif %}
+                            {{ object.post.likes_count }}
+                        </span>
+                    {% endif %}
+                    {% if user_already_liked_post %}
+                        <button type="submit" id="like-button" class="btn btn-outline-primary btn-sm" disabled>
+                            <i class="fas fa-thumbs-up"></i>
+                        </button>
+                    {% else %}
+                        <button type="submit" id="like-button" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-thumbs-up"></i>
+                        </button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    localStorage.setItem("{{ object.title|truncatechars:25 }}", "{{ object.slug }}");
+</script>
+<script src="{% static 'js/like_button.js' %}"></script>
+{% endblock extra_js %}

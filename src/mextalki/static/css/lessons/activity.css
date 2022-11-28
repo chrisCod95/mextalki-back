@@ -1,0 +1,4 @@
+.activity-area img {
+    max-width: 100%;
+    object-fit: contain;
+}

@@ -1,0 +1,99 @@
+.copy_menu .subtitle {
+    margin-top: 4rem;
+}
+
+.what-we-offer {
+    border-bottom: 2px solid #000;
+    font-size: 35px;
+}
+
+.copy-link {
+    text-align: center;
+    background-color: transparent;
+    width: 100%;
+    border-radius: 50%;
+    max-width: 25%;
+}
+
+.copy-link a {
+    text-decoration: none;
+}
+
+.copy-link i {
+    margin-top: 0.5em;
+    font-size: 70px;
+    color: #000;
+}
+
+.copy-link a:active p, .copy-link a:active i, .copy-link a:hover p, .copy-link a:hover i{
+    color: blue;
+}
+
+.copy-link p {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #000;
+}
+
+.main-copy {
+    font-family: 'Montserrat' !important;
+}
+
+@media only screen and (max-width: 993px) {
+    .copy-link p {
+        font-size: 15px;
+    }
+    .copy-link i {
+        font-size: 60px !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .copy-link p {
+        font-size: 15px;
+        margin-top: 1em;
+    }
+    .copy-link i {
+        font-size: 50px !important;
+    }
+}
+
+@media only screen and (max-width: 545px) {
+    .copy-link i {
+        font-size: 30px !important;
+        margin-top: 0.2em;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .copy-link i {
+        font-size: 20px;
+        margin-top: 0.2em;
+    }
+    .copy-link p {
+        font-size: 12px;
+        margin-top: 1.5em;
+    }
+}
+
+@media only screen and (max-width: 993px) {
+    .copy-link p {
+        font-size: 15px;
+    }
+    .copy-link i {
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .copy-link p {
+        font-size: 15px;
+        margin-top: 2em;
+        color: #000;
+    }
+    .copy-link i {
+        font-size: 30px;
+    }
+}
+

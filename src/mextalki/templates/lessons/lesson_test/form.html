@@ -1,0 +1,21 @@
+{% load humanize %}
+<div class="card bg-dark text-white">
+    <div class="card-body">
+        <h5 class="card-title">Test</h5>
+        <div class="dropdown-divider"></div>
+        <p>Once you complete this lesson you can answer a test to get Exp. Points.</p>
+        <br>
+        <div class="alert alert-info" role="alert">
+            This will be your {{score.attempt_counter|add:1|ordinal}} attempt you can earn {{score.possible_max_score}} Exp. Points.
+        </div>
+        <button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#testModal">
+            Answer Test
+        </button>
+    </div>
+</div>
+
+<div class="modal fade show" id="testModal" tabindex="-1" role="dialog" aria-labelledby="testModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        {% include 'lessons/lesson_test/modal.html' %}
+    </div>
+</div>

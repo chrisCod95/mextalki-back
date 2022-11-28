@@ -1,0 +1,51 @@
+a {
+    text-decoration: none !important;
+}
+
+.thumbnail {
+    display: block;
+    width: 100%;
+}
+
+.video-wrapper {
+    position: relative;
+}
+
+.video-description {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    text-align: center;
+    background-color: rgba(27, 27, 27, 0.705);
+    padding: 2%;
+}
+
+.video-description .title {
+    margin-top: 10%;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.video-description .description {
+    max-height: 100%;
+    font-size: 11px;
+    max-height: 100%;
+}
+
+.video-description:hover {
+    opacity: 1;
+}
+
+.fa-check-circle {
+    position: absolute;
+    color: #1e7e34;
+    font-size: 90px;
+    left: 130px;
+    top: 60px;
+    opacity: 0.6;
+}

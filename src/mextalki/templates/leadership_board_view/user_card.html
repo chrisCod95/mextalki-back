@@ -1,0 +1,37 @@
+<div class="card faq-card">
+    <div class="card-header" id="headingOne">
+        <div
+            class="row btn btn-block d-flex font-weight-bolder"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapse{{ forloop.counter }}"
+            aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+            <div class="col-sm-1 mr-auto"><span>#{{ forloop.counter }}</span></div>
+            <div class="col-sm-4"><span>{{ leader.user.username|truncatechars:12 }}</span></div>
+            <div class="col-sm-4">
+                <span class="badge badge-secondary">{{ leader.exp_points }} Exp Points</span>
+            </div>
+            <div class="col"><i class="fas {% if forloop.first %}fa-chevron-up{% else %}fa-chevron-down{% endif %} mr-2 row-arrow" aria-hidden="true"></i></div>
+        </div>
+    </div>
+    <div
+        id="collapse{{ forloop.counter }}"
+        class="collapse {% if forloop.first %}show{% endif %}"
+        aria-labelledby="heading{{ forloop.counter }}"
+        data-parent="#faqAccordion">
+        <div class="card-body row">
+            <div class="col-md-4 text-center">
+                <small>Tests Exp Points:</small><br>{{ leader.tests_exp_points|floatformat:"0" }}
+                <br><span class="badge badge-success"><small>From lessons and podcast tests</small></span>
+            </div>
+            <div class="col-md-4 text-center">
+                <small>Lesson Time Exp Points:</small><br>{{ leader.lesson_time_exp_points}}
+                <br><span class="badge badge-info"><small>From scheduled practice, lessons and convo club seats</small></span>
+            </div>
+            <div class="col-md-4 text-center">
+                <small>Videos Exp Points:</small><br>{{ leader.videos_exp_points }}
+                <br><span class="badge badge-warning"><small>From videos and podcasts you've watched</small></span>
+            </div>
+        </div>
+    </div>
+</div>

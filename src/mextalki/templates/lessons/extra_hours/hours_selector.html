@@ -1,0 +1,9 @@
+{% load mathfilters %}
+{% load duration_format %}
+<div class="form-group">
+    <select class="form-control" id="extraHourSelector">
+        {% for hour_option in extra_hour_options %}
+            <option value="{{ hour_option }}" data-target="price-{{ forloop.counter }}">{{ hour_option|mul:60|duration_format }}</option>
+        {% endfor %}
+    </select>
+</div>

@@ -1,0 +1,9 @@
+{% load mathfilters %}
+{% load duration_format %}
+<div class="form-group">
+    <select class="form-control" id="extraSeatsSelector">
+        {% for seat_option in extra_seat_options %}
+            <option value="{{ seat_option }}" data-target="price-{{ forloop.counter }}">{{ seat_option }} seat{% if forloop.counter0 %}s{% endif %}</option>
+        {% endfor %}
+    </select>
+</div>

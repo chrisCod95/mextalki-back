@@ -1,0 +1,9 @@
+{% if not user.verified %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    Verify your email address to confirm account. If you haven’t received the confirmation email please verify in your spam folder.
+    <a href="{% url 'resend_verify_email' %}" class="btn-link">Send verification email.</a>
+    </div>
+{% endif %}

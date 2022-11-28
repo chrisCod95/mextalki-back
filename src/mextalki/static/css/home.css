@@ -1,0 +1,36 @@
+.purple-icon {
+    color: var(--purple);
+}
+.btn-sun {
+    background-color: var(--sun);
+}
+.carousel-container {
+    height: calc(100vh - 58px);
+    background-size: cover;
+    background-position: bottom center;
+}
+
+
+.carousel-caption {
+    bottom: 0;
+    height: 80%;
+}
+
+.carousel-container .title {
+    color: #ffffff;
+    background-color: #212529;
+    font-size: 4rem;
+}
+.carousel-container .description {
+    color: #212529;
+    font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 850px) {
+    .carousel-caption {
+        height: 100%;
+    }
+    .carousel-container .description {
+        font-size: 1.2rem;
+    }
+}

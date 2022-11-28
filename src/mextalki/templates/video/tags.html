@@ -1,0 +1,12 @@
+{% regroup tags by name|slugify|slice:":1" as letter_list %}
+<div class="d-flex flex-wrap">
+{% for letter in letter_list %}
+    <div class="mx-1">
+        {% for tag in letter.list %}
+            <a href="{% url 'videos_list' %}?tag={{ tag.slug }}" class="badge badge-primary{% if tag.name == selected_tag %}active{% endif %}">
+                {{ tag|capfirst }}
+            </a>
+        {% endfor %}
+    </div>
+{% endfor %}
+</div>

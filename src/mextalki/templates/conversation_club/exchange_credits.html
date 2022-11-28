@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Get {{ event_type|capfirst }} Extra Hours{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Get {{ event_type|capfirst }} Extra Hours{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/pricetable.css' %}">
+    <style>
+    body {
+        background-color: var(--background);
+    }
+    </style>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        const extra_seat_price = '{{ extra_seat_price|stringformat:".0f" }}';
+        const extra_seat_currency = '{{ extra_seat_currency }}';
+        const user_is_auth = {{ user.is_authenticated|yesno:"true,false" }};
+        const discount = '{{ discount }}';
+        const event_type = '{{ event_type }}';
+        const swap_url = '{% url 'process_swap_extra_hours_payment' user_uid_b64=user.uid event_type='conversation_club' %}'
+    </script>
+    <script type="text/javascript" src="{% static 'js/js-cookie/js.cookie.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/buy_extra_seats_common.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/exchange_seats_payment.js' %}"></script>
+    {% if user.is_authenticated  %}
+        <script type="text/javascript">
+            const payment_url = '{% url 'process_paypal_extra_seats_payment' user_uid_b64=user.uid %}';
+            let stripe_checkout_url = '{% url 'stripe_create_extra_seats_checkout_session_view' %}';
+            let stripe_public_key = '{{ stripe_public_key }}';
+        </script>
+        <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+        <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}"></script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% include 'lessons/payment_modal.html' %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container mt-2 mt-md-4">
+                <h1 class="text-center mb-4">Exchange conversation club credits</h1>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 my-2">
+                        <div class="alert alert-info">You have <strong>{{ user.referral_credits }}</strong> Credits, remember 1 credit = $1 USD</div>
+                    </div>
+                    <div class="col-12 col-md-8 my-2">
+                        {% include 'conversation_club/extra_seats/price_card.html' with swap_button=True %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}"

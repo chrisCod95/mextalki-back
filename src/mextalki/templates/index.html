@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Learn Spanish and practice your listening skills.{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home_testimonials.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home_copy.css' %}">
+    <link rel="stylesheet" href="{% static 'css/copy_sections.css' %}">
+    <link rel="stylesheet" href="{% static 'css/faq.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ekko-lightbox/ekko-lightbox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/leadership_board.css' %}">
+{% endblock %}
+{% block content %}
+    {% include 'home/carousel.html' %}
+    {% include 'home/copy_menu.html' %}
+    {% include 'home/copy_sections.html' %}
+    {% include 'home/testimonials.html' %}
+    {% include 'home/faq.html' %}
+    {% include 'home/mextalki_data_counter.html' %}
+    {% include 'leadership_board.html' %}
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'js/home_testimonials.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/home_faq.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
+    <script>
+        function openTab() {
+            document.querySelector(".leadership-board").style.left = 0;
+            document.querySelector(".board-tab").style.left = "-10rem";
+        }
+        function closeTab() {
+            document.querySelector(".leadership-board").style.left = "-30rem";
+            document.querySelector(".board-tab").style.left = "-75px";
+        }
+    </script>
+{% endblock %}

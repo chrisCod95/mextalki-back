@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}{{ seo_title_prefix }}Profile{% endblock %}
+{% block og_title %}{{ seo_title_prefix }}Profile{% endblock %}
+{% block content %}
+    {% include 'leadership_board.html' %}
+    <div class="container mt-4">
+        {% include 'dashboard/verify_account.html' %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% include 'dashboard/breadcrumbs.html' %}
+        <div class="row gutters-sm">
+            <div class="col-md-5">
+                {% include 'dashboard/profile_image.html' %}
+                {% include 'dashboard/progress.html' %}
+                {% include 'dashboard/subscription_info.html' %}
+                {% include 'dashboard/connections.html' %}
+                {% include 'dashboard/referrals.html' %}
+                {% include 'dashboard/profile.html' %}
+                {% include 'dashboard/bio.html' %}
+
+            </div>
+            <div class="col-md-7">
+                {% include 'dashboard/upcoming_events.html' %}
+                {% include 'dashboard/available_courses.html' %}
+                {% include 'dashboard/available_time.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ekko-lightbox/ekko-lightbox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/leadership_board.css' %}">
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'js/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script type="text/javascript" src="{% static 'js/copy-to-clipboard.js' %}"></script>
+<script>
+    function openTab() {
+        document.querySelector(".leadership-board").style.left = 0;
+        document.querySelector(".board-tab").style.left = "-10rem";
+    }
+    function closeTab() {
+        document.querySelector(".leadership-board").style.left = "-30rem";
+        document.querySelector(".board-tab").style.left = "-75px";
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+<div class="mt-2">
+    <ul class="list-group list-group-flush">
+        {% for audio in lesson.listening_practice.get_audios %}
+            <li class="list-group-item bg-dark text-white">
+                <p class="font-weight-bold">{{ audio.title }}</p>
+                {% if audio.transcription %}
+                    <div class="collapse mt-2" id="transcriptsCollapse">
+                        {% autoescape off %}{{ audio.transcription }}{% endautoescape %}
+                    </div>
+                {% endif %}
+                <audio controls>
+                    <source src="{{ audio.file.url }}"/>
+                </audio>
+                <div class="collapse mt-2" id="answersCollapse">
+                    {% autoescape off %}
+                        <p>{{ audio.answer }}</p>
+                    {% endautoescape %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,80 @@
+<div class="board-tab bg-dark text-light" onclick="openTab()">
+    <i class="fas fa-trophy"></i>
+    <p class="tab-paragraph">
+        Leadership Board
+    </p>
+</div>
+
+<div class="container leadership-board bg-light">
+    <div class="row">
+        <div class="col-12 bg-dark text-light py-3 text-center">
+            <div class="d-inline-block">
+                <span>Mextalki Leaders - {{ leadership_board_month }}</span>
+                <i class="far fa-question-circle" data-toggle="modal" data-target="#leadership-board-info"></i>
+            </div>
+            <button type="button" class="close" onclick="closeTab()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="row podium d-flex justify-content-center">
+            {% for leader in podium %}
+                <div class="col-4 {% if forloop.counter == 2 %} order-first {% endif %}">
+                    <div class="podium-place-{{ forloop.counter }}">
+                        <img src="{% if leader.user.profile_picture %}{{ leader.user.profile_picture.url }}{% else %}{{ leader.user.mask }}{% endif %}" alt="mask">
+                    </div>
+                    <i class="fas {% if forloop.counter == 1 %} fa-trophy ml-3 {% else %} fa-medal {% endif %} trophy-{{forloop.counter}}"></i>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="container table-body my-3">
+            {% for leader in leaders %}
+                <div class="row no-gutters user-card place-{{ forloop.counter }} px-3 my-2 py-3 rounded">
+                    <div class="col-1">#{{ forloop.counter }}</div>
+                    <div class="col-7">
+                        <img src="{{ leader.user.mask }}" alt="mask" class="user-mask rounded-circle w-25" width="150">
+                        {{ leader.user.username|truncatechars:12 }}
+                    </div>
+                    <div class="col-4">
+                        <small class="user-exp-points">{{ leader.exp_points }} Points</small>
+                    </div>
+                </div>
+            {% endfor %}
+            <a href="{% url 'leadership_board' %}" class="btn btn-dark btn-block mt-2 text-center text-light btn-sm">
+                View More<i class="ml-2 fas fa-chevron-right fa-sm"></i>
+            </a>
+        </div>
+    {% else %}
+        <div class="alert alert-secondary">
+            In order to see this content please <a href="{% url 'login' %}">login</a>
+        </div>
+    {% endif %}
+</div>
+
+
+{% if leadership_board_info %}
+<div class="modal fade"
+     id="leadership-board-info" tabindex="-1" role="dialog"
+     aria-labelledby="mask-info-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{leadership_board_info.title}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="how-get-points bg-dark text-light mb-5">
+                    {% autoescape off %}
+                    {{leadership_board_info.how_get_points}}
+                    {% endautoescape %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
